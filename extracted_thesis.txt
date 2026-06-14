@@ -1,0 +1,1265 @@
+ 
+VIETNAM - KOREA UNIVERSITY OF INFORMATION AND COMMUNICATION TECHNOLOGY
+FACULTY OF COMPUTER ENGINEERING AND ELECTRONICS
+GRADUATION
+ PROJECT
+PROJECT TITLE
+ : 
+RESEARCH AND DESIGN OF LOW-POWER CHIP-BASED SYSTEMS BASED ON RISC-V ARCHITECTURE USING ASIC TECHNOLOGY
+Student's Full Name
+:
+Nguyen
+ Duc Thao
+Class
+: 
+22IC
+Major
+:
+Computer Engineering Technology
+Specialization:
+Semiconductor Integrated Circuit Design
+Supervisor:
+ 
+Dr
+. Duong Ngoc Phap
+Da Nang
+ – 12/2025
+VIETNAM - KOREA UNIVERSITY OF INFORMATION AND COMMUNICATION TECHNOLOGY
+FACULTY OF COMPUTER ENGINEERING AND ELECTRONICS
+GRADUATION
+ PROJECT
+PROJECT TITLE
+ : 
+RESEARCH AND DESIGN OF LOW-POWER CHIP-BASED SYSTEMS BASED ON RISC-V ARCHITECTURE USING ASIC TECHNOLOGY
+Student's Full Name
+:
+Nguyen
+ Duc Thao
+Class
+: 
+22IC
+Major
+:
+Computer Engineering Technology
+Specialization:
+Semiconductor Integrated Circuit Design
+Supervisor:
+ 
+Dr
+. Duong Ngoc Phap
+Da Nang – 12/2025
+ACKNOWLEDGEMENTS
+First of all, I would like to express my sincere gratitude to all lecturers at Vietnam - Korea University of Information and Communication Technology, especially the lecturers of the Faculty of Computer Engineering, for their dedicated teaching and for providing me with valuable knowledge and experience throughout my study at the university.
+In particular, I would like to express my deepest appreciation to Dr. Duong Ngoc Phap, my supervisor, for his valuable guidance, support, and suggestions during the process of completing this graduation project. His instructions helped me gain a better understanding of the research methodology, hardware design process, and the implementation of a low-power System-on-Chip based on the RISC-V architecture using ASIC technology.
+During the implementation of this project, although I made great efforts to study, design, and complete the system, limitations in my knowledge and practical experience may still lead to certain shortcomings in this report. I sincerely hope to receive understanding and constructive feedback from the lecturers so that I can further improve my knowledge, enhance my professional skills, and develop myself better in the future.
+Finally, I would like to thank my family, friends, and lecturers for their continuous encouragement, support, and favorable conditions throughout my study and during the completion of this graduation project.
+Once again, I sincerely thank you!
+SUPERVISOR'S EVALUATION
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+…………………………………………………………………………………………
+Da Nang, …/…/
+2026
+Supervisor
+Dr. 
+Duong
+ Ngoc Phap
+TABLE OF CONTENTS
+ACKNOWLEDGEMENTS
+i
+SUPERVISOR'S EVALUATION
+ii
+TABLE OF CONTENTS
+iii
+LIST OF ABBREVIATIONS
+v
+LIST OF 
+FIGURES
+vi
+LIST OF 
+TABLES
+vii
+INTRODUCTION
+1
+CHAPTER 1. <CHAPTER 1 TITLE>
+2
+1.1. <Heading title>
+2
+1.1.1. <Heading title>
+2
+1.1.2. <Heading title>
+2
+1.1.2.1.
+ <Heading title>
+2
+1.1.2.2.
+ <Heading title>
+2
+1.2. <Title caption>
+3
+1.3. <Title caption>
+3
+CHAPTER 2. <CHAPTER 2 TITLE>
+4
+2.1. <Heading title>
+4
+2.1.1. <Heading title>
+4
+2.1.2. <Heading title>
+4
+2.1.3. <Heading title>
+4
+2.1.3.1. <Heading title>
+4
+2.1.3.2. <Heading title>
+4
+CHAPTER 3. <CHAPTER 3 TITLE>
+5
+3.1. <HEADING TITLE>
+5
+3.1.1. <Heading title>
+5
+3.1.2. <Heading title>
+5
+3.1.2.1. <Heading title>
+5
+3.1.2.2. <Heading title>
+5
+3.2. <Heading title>
+5
+3.2.1. <Heading title>
+5
+3.2.2. <Heading title>
+5
+CONCLUSIONS AND FUTURE WORK
+6
+REFERENCES
+vi
+APPENDIX
+vii
+LIST OF ABBREVIATIONS
+ACRONYM
+CONTENT
+IDS
+Intrusion Detection System
+ML
+Machine Learning
+SIEM
+Security Information and Event Management
+DDoS
+Distributed Denial of Service
+DoS
+Denial of Service
+LIST OF 
+FIGURES
+Figure 1.1 <Caption>
+2
+Figure 2.1 <Caption>
+4
+LIST OF 
+TABLES
+Table 1.1 
+<Table caption>
+2
+INTRODUCTION
+ 
+Motivation
+Growth of IoT, embedded systems, and edge computing
+In the context of the Fourth Industrial Revolution, the Internet of Things (IoT), embedded systems, and Edge Computing have become fundamental technological platforms for the digital transformation of industry, healthcare, transportation, agriculture, smart homes, and smart cities. In the past, embedded systems were commonly designed to perform simple control-oriented tasks with limited connectivity and a narrow application scope. Today, they have evolved into intelligent computing nodes capable of sensing physical environments, processing data locally, communicating wirelessly, and interacting with larger cyber-physical systems through network infrastructures.
+This rapid development is driven by several technological factors. First, sensors and microcontrollers have become smaller, cheaper, and more highly integrated, enabling large-scale deployment of embedded devices in real-world environments. Second, wireless communication standards such as Wi-Fi, Bluetooth Low Energy, Zigbee, LoRa, NB-IoT, and 5G allow embedded devices to maintain continuous connectivity with each other and with cloud platforms. Third, the emergence of Edge Artificial Intelligence (Edge AI) has changed the data-processing model of modern IoT systems. Instead of transmitting all raw data to centralized cloud servers, end devices can perform data preprocessing, filtering, pattern recognition, or preliminary decision-making directly at the location where data is generated.
+Recent forecasts indicate that the number of connected IoT devices worldwide will continue to increase significantly during the 2025–2030 period, reflecting the rapid expansion of intelligent device ecosystems in both consumer and industrial applications (IoT Analytics, 2025). In addition, cellular IoT connections are also expected to grow steadily in the coming years, especially in wide-area applications requiring low cost, high reliability, and long battery lifetime, such as industrial monitoring, smart metering, logistics, and smart city infrastructures (Ericsson, 2025). These trends show that IoT is no longer merely a collection of isolated sensing devices; rather, it is becoming a large-scale distributed computing infrastructure.
+In modern IoT systems, Edge Computing plays an increasingly important role. As the number of connected devices and the volume of sensor data continue to grow, a purely cloud-based processing model faces several limitations, including 
+communication latency, network bandwidth constraints, data privacy concerns, and the energy cost of wireless transmission. Edge Computing addresses these limitations by bringing computation, storage, and data analytics closer to the data source. As a result, end devices or edge nodes can process part of the workload locally, reduce the amount of data transmitted to the cloud, improve response time, and support real-time applications.
+However, moving more computational capability toward end devices also introduces a new technical challenge. IoT nodes and embedded devices are usually small, low-cost, and resource-constrained, and many of them operate using batteries or energy harvested from the environment. At the same time, they are increasingly required to perform multiple tasks, including data acquisition, peripheral control, serial communication, basic signal processing, and embedded software execution. This contradiction between increasing computational demand and strict energy limitations makes low-power chip-based system design an essential requirement.
+From this context, the growth of IoT, embedded systems, and Edge Computing provides a strong motivation for researching compact, flexible, and energy-efficient processor architectures. For edge devices, the central processing core must not only execute embedded programs correctly but also satisfy strict constraints on area, power consumption, and performance. This forms the foundation for selecting the RISC-V architecture, particularly the PicoRV32 core, as the processing platform for researching and designing a low-power System-on-Chip based on ASIC technology.
+F
+igure 1.1. Growth of IoT devices and edge-computing applications
+Power consumption challenges in low-power chip-based systems
+The rapid growth of IoT, embedded systems, and edge computing not only increases the demand for local processing capability but also introduces strict energy constraints. Unlike conventional computing systems that can operate with a stable power supply, most IoT and edge devices are deployed in distributed, mobile, or hard-to-access environments. They may include wearable biomedical sensors, industrial sensor nodes, environmental monitoring devices, smart agriculture controllers, or communication nodes in smart city infrastructures. In many cases, these devices must operate continuously for long periods using small-capacity batteries or energy harvested from the environment, such as light, heat, mechanical vibration, or radio-frequency signals.
+This characteristic creates an important technical contradiction. On the one hand, edge devices are increasingly required to execute more tasks, including sensor data acquisition, peripheral control, wireless communication, embedded firmware execution, and sometimes basic signal processing or lightweight artificial intelligence algorithms. On the other hand, their physical size, production cost, battery capacity, and heat dissipation capability are strongly limited. Therefore, increasing computational capability by simply using a more powerful processor or raising the operating frequency is not always feasible, since it may increase power consumption, shorten battery lifetime, and reduce system reliability.
+In practical IoT applications, energy consumption affects not only performance but also the operational lifetime and maintenance cost of the entire system. For wireless sensor networks deployed in remote areas, hazardous industrial environments, or biomedical systems, frequent battery replacement may be technically difficult, costly, or unsafe. If a sensor node consumes excessive energy, the system may suffer from reduced operating time, increased maintenance cost, degraded network stability, and even data loss during monitoring. For this reason, low-power hardware design becomes a fundamental requirement rather than merely an additional optimization criterion.
+Another important issue is the energy cost of wireless communication. In many IoT systems, continuously transmitting raw data to cloud servers can consume significant energy while also increasing communication latency and network bandwidth usage. Edge computing is introduced to reduce the amount of transmitted data by processing part of the information directly on the device or at nearby edge nodes. However, when more processing tasks are moved toward end devices, the embedded processor inside the device must execute more computational cycles. As a result, energy 
+optimization is no longer limited to the communication layer; it must also be addressed directly at the processor architecture and System-on-Chip level.
+In a digital chip-based system, the central processor, memory, interconnect bus, and peripheral blocks can all contribute to power consumption during operation. Even when a functional block is not performing useful work, if the clock signal continues to propagate or if data values continue to toggle through combinational logic paths, the circuit may still generate unnecessary switching activity. This is a major source of wasted energy in many conventional embedded processor architectures. For low-power edge systems, eliminating such redundant activities is critical because every portion of saved energy contributes to extending the operating lifetime of the device.
+From an integrated circuit design perspective, the energy constraints of IoT and edge devices require optimization at multiple levels, including algorithms, embedded software, system architecture, processor microarchitecture, and physical implementation. Within the scope of this thesis, the optimization direction focuses on the hardware level, specifically the design of a RISC-V-based SoC capable of reducing dynamic power consumption through RTL-level techniques such as Clock Gating and Operand Isolation. This approach is consistent with the nature of low-power embedded systems because it directly affects the internal switching activity of digital circuits instead of relying only on software-level optimization.
+Therefore, the energy constraints of battery-powered and edge devices form one of the main motivations of this research. A compact, energy-efficient, and ASIC-implementable SoC architecture is practically meaningful for IoT applications that require long operating lifetime, low cost, and high reliability. This also provides the foundation for further investigating RTL-level power optimization techniques and evaluating their effectiveness through Power, Performance, and Area metrics in the ASIC design flow.
+Figure 1.2. Energy constraints in battery-powered edge devices
+Motivation for RISC-V-based ASIC SoC design
+Based on the rapid growth of IoT, embedded systems, and edge computing, the demand for compact, efficient, and low-power chip-based systems has become increasingly important. In modern edge devices, embedded processors are no longer limited to simple control tasks. They are also expected to perform peripheral communication, sensor data processing, memory management, serial data transmission, and embedded firmware execution. As a result, the internal hardware architecture of the device directly determines the performance, power consumption, and reliability of the entire system.
+In traditional embedded system design, a device may be built using several discrete chips, such as a microcontroller, external memory, peripheral interface circuits, and supporting components. However, this approach often increases printed circuit board area, production cost, interconnection complexity, and power consumption because signals must travel across multiple physical components. In contrast, the System-on-Chip (SoC) model integrates the central processor, memory, interconnect bus, and peripheral blocks into a single chip-level platform. This integration can reduce data-transfer latency, minimize external interconnections, optimize area, and provide better opportunities for architectural-level power optimization.
+For IoT and edge-device applications, a low-power SoC must satisfy several requirements simultaneously. First, the architecture must be compact enough to match limited hardware resources and low manufacturing cost. Second, the system must be 
+able to execute embedded programs reliably for sensor control, peripheral management, and data communication. Third, the design must be capable of reducing unnecessary switching activities in functional blocks that are inactive during certain operating periods. Fourth, the architecture should remain flexible enough to be extended or modified for different application requirements. These requirements make the study of an open, compact, and customizable processor-based SoC architecture a suitable research direction.
+In this context, the RISC-V architecture has emerged as an important option for modern embedded SoC design. RISC-V is an open standard instruction set architecture with a modular and highly customizable structure, allowing designers to select suitable instruction-set features according to system requirements instead of relying entirely on closed commercial processor architectures. The openness of RISC-V is particularly valuable in academic and integrated circuit research environments, because students and researchers can access, analyze, modify, and integrate RISC-V processor cores into customized systems. For low-power applications, the ability to intervene at the microarchitectural and RTL levels is a significant advantage, since techniques such as Clock Gating and Operand Isolation must be applied directly to the internal hardware structure.
+Among open-source RISC-V cores, PicoRV32 is a suitable choice for resource-constrained embedded systems. PicoRV32 is designed to be compact, supports the basic RV32I instruction set, and can be integrated into simple SoC systems. Due to its small area and accessible RTL structure, PicoRV32 is appropriate for investigating low-power optimization techniques at the microarchitectural level. However, a processor core alone cannot form a complete chip-based system. For practical applications, the processor must be connected to program/data memory, a system bus, and basic peripheral blocks such as UART and GPIO. Therefore, this thesis does not only examine the PicoRV32 core but also aims to construct a complete SoC architecture around it.
+In addition to RTL-level design, another important requirement is to evaluate the design after physical implementation. In many digital design studies or laboratory exercises, the result often stops at RTL functional simulation. However, RTL simulation only verifies whether the system is logically correct; it does not fully reflect physical factors such as cell area, timing paths, clock networks, interconnect 
+parasitics
+, and post-synthesis power consumption. For a thesis focused on low-power integrated circuit design, evaluating the design through Power, Performance, and Area metrics after ASIC implementation is essential for demonstrating the effectiveness of the proposed architecture.
+The development of open-source electronic design automation tools has made this research direction more accessible in academic environments. 
+OpenLane
+ provides an automated RTL-to-GDSII flow, including logic synthesis, 
+floorplanning
+, placement, clock tree synthesis, routing, and physical verification. When combined with the 
+SkyWater
+ 130nm technology platform, an RTL design can be passed through a relatively complete ASIC design process to obtain more realistic reports on timing, area, and power. This allows the thesis to move beyond architectural description and approach a professional digital integrated circuit design workflow.
+From the above analysis, the need to design a low-power RISC-V-based SoC that can be implemented using ASIC technology is highly consistent with the development trend of IoT and edge computing. This thesis selects PicoRV32 as the central processing core and integrates it with basic memory and peripheral blocks to build a compact 
+SoC.
+ On this platform, RTL-level power optimization techniques such as Clock Gating and Operand Isolation are investigated and applied to reduce unnecessary switching activity. Finally, the design is implemented through 
+OpenLane
+ using the 
+SkyWater
+ 130nm process technology to evaluate PPA metrics, thereby clarifying the effectiveness of the proposed low-power RISC-V SoC design approach.
+Figure 1.3. Motivation for a low-power RISC-V-based ASIC SoC
+Problem Statement
+Limitations of the Baseline PicoRV32 Core for Low-Power SoC Applications
+ 
+PicoRV32 is an open-source RISC-V processor core designed to be compact, simple, and easy to integrate. With support for the RV32I base instruction set, PicoRV32 
+is suitable for resource-constrained embedded systems, especially applications that require a small hardware footprint and an accessible RTL structure. Because it is open source, this processor core allows designers to analyze, modify, and integrate it into customized systems, which is not always possible with closed commercial processors. Therefore, PicoRV32 is an appropriate platform for studying RISC-V-based SoC design within the scope of a digital integrated circuit graduation project.
+However, the baseline PicoRV32 configuration is mainly optimized for minimal resource usage and ease of integration, rather than being a complete architecture specifically designed for low-power SoC applications. A standalone CPU core only performs instruction execution and data processing, while a practical chip-based system also requires memory, an interconnect bus, and peripheral blocks. Therefore, evaluating PicoRV32 only as an isolated processor core is not sufficient to understand the power behavior of the entire system. For IoT and edge-device applications, PicoRV32 needs to be integrated with SRAM, a system bus, UART, and GPIO to form a more complete SoC platform.
+One important limitation of the baseline design is the lack of a clear system-level low-power activity management mechanism. In IoT devices, not all functional blocks operate continuously. For example, UART only needs to operate when serial data transmission or reception is required, GPIO only needs to update during read/write operations or input/output state changes, and some CPU 
+datapaths
+ are meaningful only during specific instruction execution cycles. If the clock is continuously supplied to inactive blocks, or if data continues to toggle through logic paths that do not produce useful results, the system will generate redundant dynamic power consumption.
+Inside the processor core, combinational blocks such as the ALU, operand selection logic, control logic, and internal buses may produce significant switching activity during program execution. However, in some cycles, the result of a computational block may not be used. In such cases, allowing input signals to keep changing can create unnecessary transitions inside the logic cone of the circuit. These transitions do not affect the functional correctness of the system, but they still consume energy. This is a significant issue when PicoRV32 is used as the central processing core of a low-power-oriented 
+SoC.
+Besides the CPU core, peripheral blocks in the SoC may also become sources of unnecessary power consumption if clock control is not properly applied. In many embedded applications, a device usually operates periodically: it remains in a standby state most of the time and only becomes active for short intervals to collect data, process 
+information, or communicate. If UART, GPIO, or other auxiliary logic regions continue to receive the clock during idle periods, the wasted energy accumulates over time and reduces battery lifetime. Therefore, adding Clock Gating mechanisms to peripheral blocks is a necessary direction when building a low-power 
+SoC.
+In addition, the baseline PicoRV32 design, before being passed through a physical implementation flow, does not provide enough evidence to conclude its power efficiency in an ASIC environment. RTL simulation only confirms that the design is logically correct, but it does not fully represent physical factors such as cell area, clock network, propagation delay, parasitic capacitance, timing paths, and post-synthesis power consumption. Therefore, for an objective evaluation, PicoRV32 must be integrated into a complete SoC, optimized using low-power techniques, and then both the baseline and optimized designs should be implemented through the same ASIC flow to compare Power, Performance, and Area metrics.
+From these limitations, the problem addressed in this thesis is not to replace PicoRV32, but to exploit its openness, compactness, and customizability to develop a SoC that is more suitable for low-power objectives. Specifically, the thesis needs to construct a PicoRV32-based SoC, add the required memory and peripheral blocks, and apply dynamic power reduction techniques such as Clock Gating and Operand Isolation. This approach transforms PicoRV32 from a baseline processor core into the foundation of a low-power chip-based system that can be quantitatively evaluated through an ASIC implementation flow.
+Figure 1.4. Limitations of the baseline PicoRV32 core for low-power SoC applications
+Need for RTL-Level Low-Power Optimization and ASIC-Level PPA Evaluation
+Based on the limitations of the baseline PicoRV32 core in low-power SoC applications, it can be observed that using a compact processor core alone is not sufficient to satisfy the requirements of IoT and edge devices. A low-power-oriented design must not only have a small hardware footprint but also be able to reduce unnecessary activities inside the system. In digital CMOS circuits, dynamic power is mainly generated by the switching activity of clock signals, registers, data buses, and combinational logic blocks. Therefore, effective power optimization requires direct intervention at the RTL hardware level rather than relying only on software optimization or functional simulation.
+RTL-level power optimization is important because this is the stage where designers can still modify the microarchitectural structure of the system. At this level, control signals, 
+datapaths
+, peripheral activity states, and the usage conditions of computational blocks can be clearly analyzed. As a result, designers can identify logic regions that frequently generate redundant activity and add suitable energy-saving mechanisms. In this thesis, Clock Gating and Operand Isolation are selected because they directly target two important sources of dynamic power consumption: clock activity and data switching activity.
+Clock Gating is used to reduce unnecessary clock activity in peripheral blocks or inactive logic regions. In an embedded SoC, peripherals such as UART and GPIO are not always active continuously. If the clock continues to be supplied to the registers inside these blocks during idle periods, the system still consumes dynamic power even though no useful operation is being performed. By using enable signals to control clock propagation, Clock Gating can reduce transitions in the clock network and sequential elements of inactive blocks, thereby contributing to overall power reduction.
+In addition, Operand Isolation is used to limit redundant switching activity in computational 
+datapaths
+. Inside the processor core, combinational blocks such as the ALU may receive continuously changing input data even in cycles where their outputs are not required. In such cases, internal transitions inside the combinational logic consume energy without producing useful computational results. By isolating or holding stable the input operands during unnecessary cycles, Operand Isolation can reduce the switching activity factor of computational blocks and support the objective of dynamic power reduction.
+However, applying low-power techniques at the RTL level must be carefully verified to ensure that the original functionality of the system is not changed. After Clock Gating or Operand Isolation is added, the SoC must still execute programs correctly, access memory properly, communicate with UART/GPIO as expected, and maintain stable operation under test scenarios. Therefore, RTL functional simulation using testbenches and waveform analysis is a necessary step before the design is moved to physical implementation.
+Although RTL simulation can confirm logical correctness, it is still not sufficient to evaluate the practical effectiveness of a low-power integrated circuit design. The power, performance, and area of an ASIC design also depend on many physical factors, including the standard-cell library, post-synthesis cell count, clock network, interconnect wirelength, parasitic capacitance, timing constraints, and placement/routing results. Therefore, an optimization technique may reduce switching activity theoretically but may also increase area or affect timing because of additional control logic. These trade-offs can only be evaluated more clearly through post-synthesis and post-implementation reports.
+For this reason, both the baseline design and the optimized design need to be passed through the same ASIC implementation flow for an objective comparison. 
+OpenLane
+, together with the 
+SkyWater
+ 130nm technology, is used to perform the stages from logic synthesis, 
+floorplanning
+, placement, clock tree synthesis, and routing to physical verification and GDSII layout generation. From this process, Power, Performance, and Area reports can be extracted to evaluate the impact of Clock Gating and Operand Isolation on the entire 
+SoC.
+Therefore, the need for RTL-level low-power optimization and ASIC-level PPA evaluation forms the core of the research problem. If the thesis stops only at PicoRV32 integration and functional simulation, it cannot fully demonstrate the effectiveness of the proposed low-power architecture. In contrast, when the design is functionally verified, physically implemented, and compared through PPA metrics between the baseline and optimized versions, the research results become more quantitatively grounded. This provides the basis for evaluating the feasibility of a low-power RISC-V-based SoC for IoT and edge-device applications.
+Figure 1.5. RTL-level low-power optimization and ASIC-level PPA evaluation
+Objectives and Contributions
+General Objective
+The general objective of this thesis is to research, design, and evaluate a low-power System-on-Chip based on the RISC-V architecture, targeting embedded systems, IoT applications, and resource-constrained edge devices. The PicoRV32 processor core is selected as the central platform because it is an open-source, compact RISC-V core that is suitable for integration into customized SoC architectures.
+Based on this foundation, the thesis aims to develop a basic SoC consisting of the PicoRV32 processor core, SRAM memory, a system bus, and essential peripheral blocks such as UART and GPIO. This system is not only intended to verify the operation of a minimal RISC-V SoC, but also serves as a platform for investigating RTL-level low-power optimization techniques.
+The main focus of the thesis is to reduce the dynamic power consumption of the system through hardware-level optimization techniques such as Clock Gating and Operand Isolation. Clock Gating is used to limit unnecessary clock activity in peripheral blocks or idle logic regions, while Operand Isolation is applied to reduce redundant switching activity in computational 
+datapaths
+. These techniques are implemented with the objective of saving energy while preserving the functional correctness of the entire 
+SoC.
+In addition to RTL design and simulation, the thesis also aims to implement the design through the open-source 
+OpenLane
+ ASIC flow using the 
+SkyWater
+ 130nm technology. Through this process, the design can be evaluated not only at the functional 
+level but also in terms of physical characteristics such as power, performance, and area. The final result of the thesis is expected to be a relatively complete design flow from RTL design, functional verification, and low-power optimization to ASIC implementation and PPA evaluation.
+In summary, the general objective of this thesis is to build and evaluate a low-power RISC-V SoC architecture based on PicoRV32, with RTL-level optimization techniques applied and verified through an ASIC implementation flow. The expected research outcome provides experimental evidence for assessing the feasibility of using RISC-V and open-source design tools in the development of low-power embedded chip-based systems.
+[IMAGE PLACEHOLDER: Figure 1.6. General objective of the proposed low-power RISC-V SoC - A high-level diagram showing the thesis objective: PicoRV32/RISC-V core → SoC integration → RTL low-power optimization → 
+OpenLane
+/Sky130 ASIC implementation → PPA evaluation. The student should draw this figure.]
+Specific Objectives
+To achieve the general objective, this thesis is conducted through the following specific objectives:
+First, the thesis studies the theoretical background related to the RISC-V architecture, the RV32I instruction set, the PicoRV32 processor core, and power consumption principles in digital CMOS integrated circuits. This provides the necessary technical foundation for designing a low-power embedded SoC and identifying suitable locations for RTL-level power optimization.
+Second, the thesis develops a basic SoC architecture based on the PicoRV32 core. The system is intended to include a RISC-V processor core, SRAM memory, a system 
+bus, and basic peripheral blocks such as UART and GPIO. The objective of this stage is to create a complete RTL-level hardware platform capable of executing embedded programs, accessing memory, and communicating with peripherals.
+Third, the thesis applies RTL-level dynamic power optimization techniques to the SoC system. Specifically, Clock Gating is used to reduce unnecessary clock activity in peripheral blocks or idle logic regions. At the same time, Operand Isolation is applied to limit redundant switching activity in computational 
+datapaths
+, especially in combinational logic blocks such as the ALU. These techniques are implemented with the goal of reducing dynamic power consumption without changing the original functionality of the system.
+Fourth, the thesis verifies the functionality of the SoC design before and after power optimization. The verification process is performed through RTL simulation using testbenches and waveform analysis. The test scenarios must ensure that the CPU executes programs correctly, the memory responds properly, the system bus transfers valid data, and the UART/GPIO peripherals operate as expected.
+Fifth, the thesis implements the design through the open-source 
+OpenLane
+ ASIC flow using the 
+SkyWater
+ 130nm technology. After functional verification, the RTL design is passed through the main stages of the ASIC flow, including logic synthesis, 
+floorplanning
+, placement, clock tree synthesis, routing, and physical verification. The objective of this stage is to generate the GDSII layout and technical reports for design evaluation.
+Sixth, the thesis analyzes and compares Power, Performance, and Area metrics between the baseline SoC and the optimized low-power 
+SoC.
+ This comparison aims to evaluate the achieved power reduction, the impact of the optimization techniques on timing and area, and the trade-off between energy-saving benefits and additional hardware cost.
+Through these specific objectives, the thesis aims to establish a relatively complete design process from architectural study, RTL design, power optimization, and functional verification to ASIC implementation and PPA evaluation. This provides the basis for demonstrating the feasibility of a low-power RISC-V SoC based on PicoRV32 in an open-source digital integrated circuit design environment.
+Figure 1.7. Specific objectives of the thesis
+Main Contributions of the Thesis
+Based on the defined research objectives, this thesis aims to provide several main contributions to the design of low-power System-on-Chip architectures based on RISC-V. These contributions are not limited to building a functional SoC model, but also include power optimization, physical implementation, and quantitative design evaluation through technical metrics.
+The first contribution of the thesis is the development of an embedded SoC architecture based on the PicoRV32 processor core. Instead of examining the CPU core as an isolated component, the thesis integrates PicoRV32 with the essential components of a basic embedded system, including SRAM, a system bus, UART, and GPIO. This architecture provides a relatively complete RTL platform for executing firmware, verifying system operation, and evaluating power consumption at the SoC level.
+The second contribution is the application of RTL-level dynamic power optimization techniques to the SoC system. Specifically, Clock Gating is used to reduce unnecessary clock activity in peripheral blocks or idle logic regions, while Operand Isolation is applied to limit redundant switching activity in computational 
+datapaths
+. The implementation of these techniques demonstrates how low-power design principles can be directly introduced into the hardware structure rather than remaining only at the theoretical or software level.
+The third contribution is the establishment of a front-end to back-end design and verification flow using open-source tools. The SoC design is described at the RTL level, functionally verified through simulation, and then passed through the 
+OpenLane
+ flow using the 
+SkyWater
+ 130nm technology for ASIC implementation. This process connects 
+RTL design, functional verification, logic synthesis, physical implementation, and GDSII layout generation within a relatively complete digital IC design flow.
+The fourth contribution is the quantitative evaluation of the design through Power, Performance, and Area metrics. By comparing the baseline SoC and the optimized low-power SoC, the thesis provides experimental evidence for evaluating the effectiveness of Clock Gating and Operand Isolation. The PPA comparison helps clarify the achieved power reduction, the impact on timing, and the area cost introduced by the additional optimization logic.
+In summary, the main contribution of this thesis is to propose and implement an experimental approach for low-power RISC-V SoC design based on PicoRV32, combining RTL-level optimization with ASIC-level PPA evaluation using open-source tools. The outcome of this thesis can serve as a reference for further studies on embedded processor design, dynamic power optimization, and open-source ASIC design flows in academic environments.
+Figure 1.8. Main contributions of the thesis
+Scopes and Thesis Structure
+R
+esearch Subjects
+The main research subject of this thesis is a low-power System-on-Chip based on the RISC-V architecture, built around the PicoRV32 processor core and implemented following a digital ASIC design approach. The research subjects are defined to directly support the design, optimization, verification, and evaluation of a low-power embedded SoC at both the RTL level and the physical implementation level.
+The first research subject is the RISC-V instruction set architecture and the PicoRV32 processor core. Within the scope of this thesis, RISC-V is mainly considered 
+through the RV32I base instruction set, which is suitable for compact embedded processors. PicoRV32 is selected as the central processing core because it is an open-source RISC-V core with a relatively accessible RTL structure and good suitability for integration into customized SoC systems. The study of this subject focuses on instruction execution, 
+datapath
+ organization, control logic, and possible locations where redundant switching activity may occur.
+The second research subject is the PicoRV32-based embedded SoC architecture. The target SoC consists of the CPU core, SRAM memory, a system bus, and basic peripheral blocks such as UART and GPIO. These components are necessary to form a minimal hardware platform capable of executing firmware, accessing memory, and communicating with peripherals. Studying the SoC architecture is not only intended to ensure correct system functionality but also to provide a suitable environment for evaluating power consumption at the system level rather than only at the isolated processor-core level.
+The third research subject is RTL-level dynamic power optimization techniques. In this thesis, the two main techniques considered are Clock Gating and Operand Isolation. Clock Gating focuses on controlling clock activity in peripheral blocks or idle logic regions to reduce dynamic power caused by clock switching. Operand Isolation focuses on limiting unnecessary switching activity in computational 
+datapaths
+, especially in combinational logic blocks such as the ALU. These techniques are studied as hardware-level interventions that directly modify the RTL structure to improve the energy efficiency of the 
+SoC.
+The fourth research subject is the open-source ASIC implementation flow using 
+OpenLane
+ and the 
+SkyWater
+ 130nm technology. After the SoC design is described and verified at the RTL level, it is passed through physical implementation stages such as synthesis, 
+floorplanning
+, placement, clock tree synthesis, routing, and physical verification. Studying this design flow allows the system to be evaluated not only through functional simulation but also through physical characteristics such as timing, area, power, and GDSII layout generation.
+The final research subject is the Power, Performance, and Area evaluation metrics of the design. PPA reports are used to compare the baseline SoC and the optimized low-power 
+SoC.
+ Through this comparison, the thesis can evaluate the impact of Clock Gating and Operand Isolation on power consumption, timing performance, and hardware area. This provides an important quantitative basis for assessing the effectiveness of the proposed low-power RISC-V SoC design approach.
+Figure 1.9. Research subjects of the thesis
+Research Scope and Limitations
+The research scope of this thesis is limited to the field of digital integrated circuit design, focusing on the development, optimization, and evaluation of a low-power SoC based on the RISC-V architecture. The thesis does not aim to develop a high-performance processor or a complex SoC comparable to commercial microcontrollers. Instead, it focuses on a minimal embedded architecture that is suitable for studying RTL-level dynamic power reduction techniques and evaluating the design through an ASIC implementation flow.
+Regarding the processor architecture, the thesis uses the PicoRV32 core as the central processing unit of the system. The RISC-V architecture is mainly considered through the RV32I base instruction set, which is suitable for compact embedded applications. The thesis does not extend to complex processor configurations such as multicore systems, high-performance pipelines, superscalar processors, complex cache architectures, or floating-point extensions. This limitation allows the thesis to focus on building a compact SoC and optimizing dynamic power rather than addressing high-performance processor architecture issues.
+Regarding the SoC system, the target design includes basic components: the PicoRV32 CPU core, SRAM memory, a system bus, and simple peripheral blocks such as UART and GPIO. These components are sufficient to form a minimal embedded platform capable of executing firmware, accessing memory, and communicating with peripherals. More complex peripheral modules such as SPI, I2C, advanced timers, complex interrupt controllers, DMA, ADC/DAC, or industrial communication protocols are not included in the main scope of the thesis. Limiting the number of peripherals helps control design complexity and maintain focus on evaluating the effectiveness of low-power techniques.
+Regarding power optimization, the thesis focuses on RTL-level dynamic power reduction techniques, specifically Clock Gating and Operand Isolation. Clock Gating is applied to reduce unnecessary clock activity in peripheral blocks or idle logic regions. Operand Isolation is used to reduce redundant switching activity in computational 
+datapaths
+, especially in combinational blocks such as the ALU. The thesis does not deeply investigate transistor-level power optimization, analog design, physical power gating, dynamic voltage scaling, or multi-voltage-domain design, as these techniques require a broader technology scope and more complex physical verification.
+Regarding functional verification, the thesis performs verification at the RTL simulation level using testbenches and waveform analysis. The objective is to ensure that the SoC can execute embedded programs, access memory, and control basic peripherals correctly. Open-source simulation tools such as Icarus Verilog or 
+Verilator
+, together with 
+GTKWave
+, may be used to observe signals and confirm system behavior. However, the thesis does not include full formal verification, advanced UVM-based verification, or hardware testing on FPGA platforms.
+Regarding physical implementation, the thesis uses the open-source 
+OpenLane
+ ASIC design flow together with the 
+SkyWater
+ 130nm technology. After RTL verification, the design is passed through stages such as logic synthesis, 
+floorplanning
+, placement, clock tree synthesis, routing, and physical verification to generate a GDSII layout. Timing, power, and area reports are used to evaluate the post-implementation design. However, the thesis does not include physical chip fabrication at a foundry, chip packaging, real silicon measurement, or post-silicon testing. The final back-end output is limited to the GDSII layout and basic sign-off reports within the 
+OpenLane
+ environment.
+Regarding evaluation, the thesis focuses on comparing Power, Performance, and Area metrics between the baseline SoC and the optimized low-power 
+SoC.
+ The Power metric is used to evaluate the achieved power reduction; Performance is considered through timing reports or the ability to satisfy target frequency constraints; Area is evaluated through cell area or layout area after synthesis and implementation. These evaluations aim to demonstrate the relative effectiveness of the low-power techniques under the same technology condition and design flow. The thesis does not aim to directly compare the proposed design with commercial microcontrollers or fabricated industrial RISC-V chips.
+From these boundaries, the research scope is defined in a feasible manner and is suitable for a graduation project in digital integrated circuit design. The thesis focuses 
+on completing an RTL-to-GDSII design process for a low-power RISC-V SoC while quantitatively evaluating the optimization effectiveness through PPA metrics. Clearly defining the scope and limitations helps prevent the research from becoming too broad and provides a clear foundation for the following chapters on background knowledge, design methodology, and experimental results.
+: Figure 1.10. Research scope and limitations of the thesis
+Thesis Structure
+This thesis is organized into five main chapters to present the complete process of researching, designing, optimizing, implementing, and evaluating a low-power SoC based on the RISC-V architecture.
+Chapter 1 – Introduction presents an overview of the research context, including the growth of IoT, embedded systems, and edge computing, as well as the need for low-power chip-based system design. This chapter also defines the research problem, the limitations of the baseline PicoRV32 core for low-power SoC applications, and the need for RTL-level optimization and ASIC-level PPA evaluation. In addition, the chapter presents the research objectives, contributions, research subjects, scope, and overall thesis structure.
+Chapter 2 – Literature Review and Background presents the theoretical background and related work required for the thesis. The chapter covers an overview of the RISC-V architecture, the RV32I instruction set, the PicoRV32 processor core, power consumption principles in digital CMOS integrated circuits, dynamic power reduction techniques such as Clock Gating and Operand Isolation, as well as background knowledge on SoC design and open-source ASIC implementation flows. This chapter 
+provides the necessary theoretical foundation for the proposed design methodology in the following chapter.
+Chapter 3 – Proposed Research Approaches presents the research methodology and the proposed system architecture. This chapter describes the PicoRV32-based SoC design, including the CPU core, SRAM memory, system bus, UART, and GPIO. In addition, it explains how RTL-level power optimization techniques are applied, specifically Clock Gating for peripheral blocks or idle logic regions and Operand Isolation for computational 
+datapaths
+. The functional verification process and the ASIC implementation flow using 
+OpenLane
+ with the 
+SkyWater
+ 130nm technology are also described in this chapter.
+Chapter 4 – Experimental Results presents the experimental environment, test scenarios, and obtained results. The chapter includes RTL functional simulation results, 
+OpenLane
+ implementation results, GDSII layout output, and timing, power, and area reports. It also compares Power, Performance, and Area metrics between the baseline SoC and the optimized low-power SoC, thereby evaluating the effectiveness of Clock Gating and Operand Isolation on the entire system.
+Chapter 5 – Conclusions and Future Work summarizes the main results achieved in the thesis, evaluates the level of completion of the research objectives, and identifies the remaining limitations. Based on these limitations, the chapter proposes several future development directions, such as adding more peripherals, improving the verification methodology, applying more advanced power optimization techniques, or moving toward physical platform testing and future tape-out preparation.
+Overall, the thesis structure follows a logical sequence from research motivation, theoretical background, proposed methodology, experimental results, to conclusions and future work. This organization clarifies the complete design process of a low-power RISC-V SoC from RTL development to ASIC implementation and quantitative PPA evaluation.
+LITERATURE REVIEW AND BACKGROUND
+<
+Background of RISC-V-Based Low-Power SoC Design
+>
+<
+Overview of RISC-V Instruction Set Architecture
+>
+<
+RISC-V is an open instruction set architecture developed based on the RISC design philosophy, which emphasizes simple, clear, and hardware-efficient instructions. In a processing system, the instruction set architecture serves as the interface between software and hardware. It defines how instructions are encoded, how the processor accesses registers, performs operations, reads and writes memory, and controls program flow. Therefore, the choice of instruction set architecture directly affects the microarchitectural design, hardware complexity, performance, and power consumption of the processor.
+One important characteristic of RISC-V is its openness. Unlike many proprietary commercial processor architectures, RISC-V is published as an open instruction set architecture, allowing research communities, academic institutions, and industry developers to study, implement, and customize processors based on a common specification. This feature supports the development of open-source processor cores, compiler tools, simulation environments, and hardware/software ecosystems around RISC-V. In digital integrated circuit design, the openness of RISC-V is especially meaningful because designers can access the RTL source code of many processor cores, analyze their internal structures, and adapt the architecture according to system requirements.
+In addition to openness, RISC-V is highly modular. The architecture is built from a base instruction set and optional extensions. The base instruction set defines the minimum functions required to build a processor, while extensions can be added depending on application requirements. For example, a simple embedded system may require only the base integer instruction set, whereas higher-performance systems may add extensions for multiplication and division, compressed instructions, floating-point computation, or vector processing. This organization helps designers avoid integrating unnecessary functions, thereby reducing hardware complexity and supporting area and power optimization.
+In the context of low-power embedded systems, the RV32I instruction set plays an important role. RV32I is the 32-bit base integer instruction set of RISC-V, providing the essential instructions required for computation, program control, memory access, and basic data processing. Due to its relatively compact structure, RV32I is suitable for 
+minimal embedded processors where hardware area and power consumption are critical constraints. Using a base instruction set such as RV32I can reduce the amount of logic required for instruction decoding, 
+datapath
+ organization, and control logic, which supports the design of compact processor cores.
+RISC-V also follows the load-store model commonly associated with RISC architectures. In this model, arithmetic and logical operations are mainly performed on internal processor registers, while memory access is handled through separate load and store instructions. This organization makes the processor 
+datapath
+ clearer, reduces execution complexity, and supports a more regular hardware structure. For RTL designs, this clarity and regularity make it easier to analyze dataflow, verify functionality, and identify possible locations for power optimization.
+Another advantage of RISC-V in academic environments is its ability to support research from the architectural level to the physical implementation level. Researchers can begin by studying the instruction set, then analyze how instructions are decoded, how the 
+datapath
+ is organized, how the processor communicates with memory and peripherals, and finally how the design can be synthesized and implemented through an ASIC flow. Therefore, RISC-V is not only an instruction set for software development but also a suitable platform for learning and researching the complete digital IC design process.
+In this thesis, RISC-V is selected for three main reasons. First, its open architecture is suitable for hardware research and customization. Second, its modular structure allows the RV32I base instruction set to be used for building a compact embedded processor that matches the low-power design direction. Third, the RISC-V ecosystem includes many open-source processor cores, among which PicoRV32 is a suitable choice for SoC integration and RTL-level optimization. Therefore, RISC-V provides an important theoretical and technical foundation for researching, designing, and evaluating a low-power SoC in this thesis.
+Figure 2.1. Overview of RISC-V instruction set architecture
+<
+ 
+PicoRV32 Processor Core 
+>
+<
+ 
+PicoRV32 is an open-source RISC-V processor core designed to be compact, flexible, and easy to integrate into customized digital systems. The core is described in Verilog HDL and can be used in different hardware design environments, including FPGA and ASIC. According to the project documentation, PicoRV32 can be configured to support several 32-bit RISC-V variants such as RV32E, RV32I, RV32IC, RV32IM, or RV32IMC. This configurability makes PicoRV32 suitable for embedded systems with different requirements in terms of area, features, and performance.
+One important characteristic of PicoRV32 is its size-optimized design direction. Instead of focusing on very high performance like complex pipelined processors, PicoRV32 prioritizes compactness and simplicity in its microarchitecture. This makes the core suitable for resource-constrained embedded systems, where silicon area, logic cell count, and power consumption are important factors. In the context of SoC design for IoT and edge devices, a compact processor core such as PicoRV32 can serve as the central controller for executing firmware, controlling peripherals, and managing basic dataflow.
+Functionally, PicoRV32 performs the role of a 32-bit RISC-V CPU, including fetching instructions from memory, decoding instructions, reading operands from the register file, executing operations through the 
+datapath
+, accessing memory when required, and writing results back to the destination register. Depending on the configuration, the core can support the RV32I base instruction set or additional extensions such as integer multiplication/division and compressed instructions. Within the scope of this thesis, the focus is placed on a configuration suitable for a minimal 
+embedded SoC, where the processor must be capable of executing embedded programs without integrating unnecessary features.
+PicoRV32 is commonly used as a central IP core in small SoC systems. A standalone CPU core cannot operate as a complete system without memory, an interconnect bus, and peripheral blocks. Therefore, when PicoRV32 is integrated into an SoC, the processor core must be connected to SRAM for program and data storage, to a system bus for internal data transfer, and to peripherals such as UART or GPIO for communication with the external environment. This integration transforms PicoRV32 from an isolated processor core into the control center of a more complete embedded system.
+From the perspective of low-power design, PicoRV32 offers several advantages. First, its compact structure reduces hardware resources compared with more complex processor cores, which may contribute to lower area and baseline power consumption. Second, its open RTL source code allows designers to analyze internal blocks such as the 
+datapath
+, ALU, control logic, and memory interface. Third, the configurability of the core allows designers to select only the required functionality, avoiding unnecessary extensions in a low-power-oriented design.
+However, the compactness of PicoRV32 does not automatically mean that an entire PicoRV32-based SoC is fully power-optimized. When the core is integrated with memory, buses, and peripherals, the system power consumption also depends on clock activity, data switching activity, memory access behavior, and the activity states of peripheral blocks. In addition, during some execution cycles, combinational blocks inside the CPU may generate switching activity even when their outputs are not directly used. Therefore, to build a truly low-power SoC, additional RTL-level optimization techniques such as Clock Gating and Operand Isolation need to be investigated.
+In this thesis, the PicoRV32 processor core is adopted as the central CPU component of the proposed SoC. Instead of developing a new processor from scratch, the thesis reuses the PicoRV32 RTL implementation and focuses on building the surrounding SoC architecture. Components such as memory subsystems, peripheral modules, low-power optimization mechanisms, and the ASIC implementation flow are developed within the scope of this work. The use of PicoRV32 reduces CPU design complexity while allowing the research to concentrate on low-power optimization techniques and system-level PPA evaluation. 
+>
+Figure 2.2. Simplified architecture of the PicoRV32 processor core.
+<
+System-on-Chip Architecture for Embedded Applications 
+>
+<
+A System-on-Chip (SoC) is an architecture that integrates multiple functional components of a computing system into a single chip design. Instead of using several discrete integrated circuits for the processor, memory, communication interfaces, and peripherals, an SoC typically includes a central processing core, memory, a system bus, peripheral blocks, and basic control signals such as clock and reset. This approach makes the system more compact, reduces off-chip interconnections, and provides better opportunities for optimizing performance, area, and power consumption.
+In embedded systems, IoT applications, and edge devices, SoC architecture plays an important role because these systems are usually constrained by hardware area, energy, and implementation cost. Integrating the CPU, memory, and peripherals into the same platform helps reduce hardware complexity, improve reliability, and limit energy consumption caused by data transfer through off-chip connections. In addition, an SoC allows designers to customize the architecture according to specific application requirements, such as adding or removing peripheral blocks, adjusting memory capacity, or applying RTL-level power optimization techniques.
+Within the scope of this thesis, the PicoRV32 core is used as the central CPU component of the proposed 
+SoC.
+ PicoRV32 is not considered a complete SoC by itself; rather, it is a RISC-V processor core integrated into a larger system. The basic SoC architecture in this thesis consists of the PicoRV32 CPU core, SRAM, a system bus, UART, and GPIO. In this structure, SRAM is used to store program instructions or data, the system bus connects and transfers data between the CPU and other components, 
+UART supports serial communication, and GPIO provides digital input/output interaction with external signals.
+The system bus is an important intermediate component in the SoC architecture because it allows the CPU to access memory and peripherals through address, data, and control signals. During program execution, the CPU can read instructions or data from SRAM, write data to peripherals, or receive data from external devices through UART and GPIO. This structure forms a basic but complete embedded system that can be used for functional verification and system-level design evaluation.
+For low-power design objectives, the SoC architecture also provides the foundation for applying dynamic power optimization techniques. When functional blocks such as peripherals, memory, or certain 
+datapaths
+ are not continuously active, techniques such as Clock Gating and Operand Isolation can be considered to reduce unnecessary switching activity. Therefore, building a PicoRV32-based SoC is not only intended to create a more complete processing system, but also to provide an experimental platform for analyzing and optimizing Power, Performance, and Area metrics in the following implementation stages.
+[IMAGE PLACEHOLDER: Figure 2.3. PicoRV32-Based Embedded SoC Architecture - A diagram showing the PicoRV32 CPU core connected to SRAM, UART, and GPIO through a system bus. The Clock/Reset block provides system control signals, while UART and GPIO connect to external I/O signals. The student should draw this figure.]
+Figure 2.3. Simplified architecture of the proposed PicoRV32-based low-power embedded 
+SoC.
+<Power Consumption and Low-Power Design Techniques in Digital ICs>
+<Power Consumption in Digital CMOS Circuits>
+<
+In digital integrated circuits based on CMOS technology, power consumption is one of the most important metrics because it directly affects system performance, reliability, and applicability. For embedded systems, IoT devices, and edge computing platforms, power consumption becomes even more critical because these systems often operate under limited energy sources, such as batteries or energy harvested from the environment. Therefore, understanding the main power components in CMOS circuits is necessary for selecting and applying suitable low-power design techniques.
+The total power consumption of a digital CMOS circuit can be generally expressed as follows:
+where 
+represents static power and 
+represents dynamic power. Static power is mainly associated with leakage current in transistors when the circuit is not switching. In an ideal CMOS model, static current is nearly zero. However, in modern semiconductor technologies, leakage current still exists due to different physical effects. This component becomes more significant as technology nodes scale down and transistor density increases.
+Dynamic power is the power consumed when signal nodes in the circuit switch between logic levels. In CMOS circuits, each time a load capacitance is charged or discharged, energy is drawn from the power supply. The dynamic power component is commonly expressed as:
+where 
+is the switching activity factor, 
+is the load capacitance, 
+is the supply voltage, and 
+is the operating frequency. This equation shows that dynamic power strongly depends on supply voltage, clock frequency, and switching activity in the circuit. Since the supply voltage appears as a squared term, reducing 
+can significantly reduce power consumption, although it may also affect circuit speed and stability.
+In addition to capacitive switching power, dynamic power also includes short-circuit power. Short-circuit power occurs for a very short duration when both PMOS and NMOS transistors conduct simultaneously during an input transition. During this interval, a temporary direct current path exists between 
+and ground, causing short-circuit current. In typical digital designs, this component is often smaller than switching power, but it should still be considered in an overall power analysis.
+For low-power SoC systems, dynamic power is often the main target for RTL-level optimization, especially when the design is clock-driven and contains multiple functional blocks that are not always active. If the clock is continuously supplied to unused modules, or if operands in the 
+datapath
+ continue switching even when their results are not required, unnecessary switching activity will occur. These redundant transitions increase power consumption without contributing directly to the functional operation of the system.
+In this thesis, the power optimization objective mainly focuses on reducing dynamic power through RTL-level techniques. Specifically, Clock Gating is used to limit unnecessary clock activity in functional blocks, while Operand Isolation is applied to reduce redundant switching in 
+datapath
+ or computation units. These techniques are suitable for the PicoRV32-based SoC design because they can be implemented at the hardware description level before the design is synthesized and implemented through the ASIC flow using 
+OpenLane
+/Sky130.
+: Figure 2.4. Power Components in Digital CMOS Circuits
+<Clock Gating Technique>
+<
+Clock Gating is one of the most widely used RTL-level low-power design techniques in digital integrated circuits. The main idea of this technique is to prevent the clock signal from propagating to registers or sequential logic blocks when those blocks are not required to operate. Since the clock network usually switches continuously in a synchronous digital system, it can contribute significantly to the total dynamic power consumption. Therefore, reducing unnecessary clock transitions is an effective way to reduce power consumption, especially in embedded processors and SoC systems.
+As discussed in the previous section, the dynamic power consumption of a CMOS circuit is strongly related to switching activity, load capacitance, supply voltage, and operating frequency. Clock Gating mainly targets the switching activity and effective capacitance of the clocked logic. When a functional block is idle, its internal registers do not need to receive active clock edges. By disabling the clock input of that block, the transitions in the clock tree, flip-flops, and some downstream logic can be reduced. As a result, the dynamic power consumed by inactive modules can be decreased without changing the main functionality of the system.
+In a simple conceptual form, Clock Gating can be represented by using an enable signal to control whether the clock is delivered to a specific module. When the enable signal is active, the gated clock follows the original system clock and the module operates normally. When the enable signal is inactive, the gated clock remains stable, and the registers inside the module hold their previous values. This behavior allows the system to avoid unnecessary switching during idle periods.
+However, in ASIC design, Clock Gating should not be implemented by directly combining the clock signal with an ordinary logic gate such as an AND gate. A simple gate-level combination may introduce glitches, timing problems, or unstable clock pulses, which can cause incorrect circuit operation. Instead, practical ASIC flows usually rely on integrated clock-gating cells provided by the standard-cell library. These cells are designed to safely control clock propagation and are optimized for timing, power, and physical implementation. In RTL design, the designer typically describes the enable condition, and the synthesis tool can infer or insert suitable clock-gating cells during the synthesis process.
+In an embedded SoC, Clock Gating is especially useful for peripheral modules because these blocks are not active all the time. For example, a UART module only needs to operate when data transmission or reception is required. Similarly, GPIO logic mainly changes when input/output states are read or written by the processor. If these peripheral blocks continuously receive the system clock even when they are idle, unnecessary dynamic power will be consumed. By adding clock enable control signals, the clock activity of UART, GPIO, or other peripheral blocks can be reduced during inactive periods.
+For a PicoRV32-based low-power SoC, Clock Gating can be applied at different levels. At the peripheral level, clock enable signals can be generated based on bus access conditions, transmit/receive status, or configuration registers. At the system level, inactive modules can be temporarily disabled when the processor does not access them. In some internal processor regions, clock activity may also be reduced if certain registers do not need to be updated in a given cycle. However, the application of Clock Gating inside the CPU core must be carefully analyzed to avoid affecting instruction execution, memory access, or control flow.
+The main advantage of Clock Gating is that it can reduce dynamic power consumption while preserving the original operating frequency and supply voltage. Unlike voltage scaling or frequency scaling, Clock Gating does not necessarily reduce system performance when it is applied only to idle modules. In addition, it can be 
+implemented at the RTL level and evaluated through synthesis and ASIC implementation reports. This makes it suitable for academic SoC design projects that aim to compare power, performance, and area metrics between baseline and optimized designs.
+Nevertheless, Clock Gating also introduces certain design trade-offs. Additional enable logic and clock-gating cells may increase the area of the circuit. Improper clock-gating control may also create timing violations or functional errors if the clock is disabled at the wrong moment. Therefore, the gated design must be verified carefully through RTL simulation and later evaluated through ASIC implementation reports. In this thesis, Clock Gating is selected as one of the main low-power techniques because it directly reduces unnecessary clock activity in the proposed PicoRV32-based SoC and provides a clear basis for power comparison between the baseline and optimized designs.
+Figure 2.5. Clock Gating mechanism for an inactive peripheral block
+Operand Isolation Technique
+Operand Isolation is another important RTL-level low-power design technique used to reduce unnecessary switching activity in combinational logic blocks. While Clock Gating mainly focuses on reducing clock activity in sequential circuits, Operand Isolation targets the data activity at the inputs of computational units such as adders, multiplexers, shifters, comparators, and Arithmetic Logic Units. The basic idea of this 
+technique is to prevent unused or unnecessary input operands from propagating into a logic block when the output of that block is not required in the current operation cycle.
+In digital CMOS circuits, dynamic power consumption is strongly affected by the switching activity factor. Even if a combinational block does not produce a useful output in a certain cycle, changes at its inputs may still propagate through internal gates and cause transitions inside the circuit. These internal transitions consume dynamic power although they do not contribute to the functional result of the system. Therefore, reducing unnecessary operand switching is an effective method to decrease power consumption in 
+datapath
+-oriented designs.
+In a processor 
+datapath
+, many computational blocks are not used by every instruction. For example, an ALU may be required for arithmetic and logical instructions, address calculation for load/store instructions, or branch comparison. However, in some cycles, certain operands or operation results may not be needed. If the input operands continue to change due to register file outputs, bus activities, or control-signal transitions, the ALU and related combinational logic may still switch internally. Operand Isolation reduces this redundant switching by forcing the inputs of the inactive block to remain stable or by selecting constant values when the block is not required.
+A common implementation of Operand Isolation uses isolation logic controlled by an enable signal. When the enable signal indicates that the computational block is active, the real operands are allowed to pass into the block. When the block is inactive, the isolation logic prevents the changing operands from reaching the internal logic. This can be implemented by using AND gates, multiplexers, or latch-based structures depending on the design requirements and synthesis strategy. In many RTL designs, multiplexers are commonly used to select between the real operand and a stable value such as zero. As a result, the input switching activity of the combinational block can be reduced during inactive cycles.
+Compared with Clock Gating, Operand Isolation is more suitable for reducing switching activity in combinational 
+datapaths
+ rather than clocked registers. Clock Gating disables unnecessary clock transitions in sequential blocks, while Operand Isolation limits unnecessary data transitions before they enter combinational logic cones. These two techniques are complementary. In a low-power SoC, Clock Gating can be applied to idle peripheral modules, while Operand Isolation can be applied to computation-heavy 
+datapath
+ blocks inside the processor or hardware accelerators.
+In the context of a PicoRV32-based SoC, Operand Isolation can be considered for the internal 
+datapath
+ of the processor, especially around the ALU and operand 
+selection logic. PicoRV32 executes RISC-V instructions by selecting source operands, performing arithmetic or logical operations, accessing memory, and writing results back when required. However, not all 
+datapath
+ components are meaningful in every control state or instruction type. Therefore, if the ALU input operands are allowed to toggle even when the ALU result is not used, unnecessary dynamic power may be consumed. By adding suitable operand-enable conditions, the input activity of selected combinational blocks can be reduced.
+For example, when the processor is not performing an ALU-related operation, the operands supplied to the ALU can be isolated so that the ALU input values remain unchanged or are forced to a stable constant value. Similarly, in some peripheral or bus-interface logic, address or data paths that are not involved in the current transaction can be isolated to avoid redundant switching. This approach is particularly useful in low-power embedded systems where the processor frequently alternates between active computation, memory access, peripheral access, and idle states.
+However, Operand Isolation also introduces design trade-offs. The additional isolation logic may increase area and may add extra delay to the 
+datapath
+. If the isolation control signal is not generated correctly, the system may block valid operands and cause functional errors. Therefore, the designer must carefully determine when a block is truly inactive and ensure that operand isolation does not affect instruction execution, memory access, or peripheral communication. Functional simulation and waveform analysis are required to verify that the optimized design produces the same correct behavior as the baseline design.
+In ASIC implementation, the effectiveness of Operand Isolation should be evaluated not only at the RTL level but also through post-synthesis or post-layout power reports. Although the technique can reduce switching activity, the added isolation logic also consumes some area and power. Therefore, the final benefit depends on the balance between reduced 
+datapath
+ switching and the overhead introduced by the isolation circuitry. In this thesis, Operand Isolation is applied together with Clock Gating to reduce dynamic power consumption in the proposed PicoRV32-based low-power 
+SoC.
+ The optimized design is then compared with the baseline design through Power, Performance, and Area metrics to evaluate the practical effectiveness of the technique.
+Figure 2.6. Operand Isolation mechanism for a computational 
+datapath
+ block
+Comparison between Clock Gating and Operand Isolation
+Clock Gating and Operand Isolation are both RTL-level low-power design techniques used to reduce dynamic power consumption in digital integrated circuits. Although both techniques aim to reduce unnecessary switching activity, they target different sources of power consumption and are applied to different parts of a digital system. Therefore, understanding the difference between these two techniques is important before applying them to a low-power SoC architecture.
+Clock Gating mainly focuses on reducing unnecessary clock activity in sequential circuits. In a synchronous digital system, the clock signal is distributed to many registers and flip-flops. Even when a functional block is not performing useful operations, the clock may still toggle continuously and cause dynamic power consumption in the clock tree and sequential elements. By disabling the clock of inactive blocks, Clock Gating can reduce switching activity in the clock network and prevent unnecessary register updates. This technique is especially suitable for peripheral modules or functional blocks that are only active during certain operating periods.
+In contrast, Operand Isolation focuses on reducing unnecessary data switching activity in combinational logic blocks. In a processor 
+datapath
+, input operands may continue to change even when the result of a computational block is not required. These changes can propagate through adders, multiplexers, comparators, shifters, or ALU logic and cause internal transitions. Although these transitions may not affect the final output of the system, they still consume dynamic power. Operand Isolation prevents unnecessary operands from entering inactive combinational blocks, thereby reducing switching activity inside the 
+datapath
+.
+The main difference between the two techniques lies in their optimization target. Clock Gating targets the clock signal and is mainly applied to sequential logic, while Operand Isolation targets input data signals and is mainly applied to combinational logic. Clock Gating reduces power by stopping unnecessary clock transitions, whereas Operand Isolation reduces power by preventing unnecessary operand transitions. Therefore, the two techniques are not alternatives that completely replace each other; instead, they are complementary techniques that can be used together in a low-power design.
+In a PicoRV32-based SoC, Clock Gating can be applied to peripheral blocks such as UART and GPIO because these modules are not always active during program execution. For example, the UART module only needs to receive clock activity when data transmission or reception is required. Similarly, GPIO logic may only need to be updated when the processor performs read or write operations to GPIO registers. If these modules are clocked continuously during idle periods, unnecessary dynamic power will be consumed. Clock Gating helps reduce this type of power by disabling the clock when the module is inactive.
+Operand Isolation, on the other hand, is more suitable for 
+datapath
+-related logic inside the processor or bus interface. For example, when the ALU result is not required in a specific control state, the operands supplied to the ALU can be isolated or forced to stable values. This prevents redundant internal transitions inside the ALU and related combinational logic. Operand Isolation can also be considered for address and data paths in the system bus when certain transactions are not active. As a result, this technique supports the reduction of data-dependent switching activity in the 
+SoC.
+From the perspective of implementation complexity, Clock Gating is usually supported by ASIC synthesis tools and standard-cell libraries through integrated clock-gating cells. However, it requires careful control of clock enable signals to avoid glitches and timing problems. Operand Isolation is often implemented using additional multiplexers, AND gates, or isolation logic at the input of combinational blocks. Although this approach can reduce switching activity, it may increase area and add delay to the 
+datapath
+. Therefore, both techniques introduce trade-offs between power reduction, area overhead, and timing impact.
+Table 2.1. Comparison between Clock Gating and Operand Isolation
+Comparison Criteria
+Clock Gating
+Operand Isolation
+Main objective
+Reduce unnecessary clock switching
+Reduce unnecessary data/operand switching
+Target circuit type
+Sequential logic, registers, flip-flops, clock tree
+Combinational logic, 
+datapath
+, ALU, multiplexers
+Main control signal
+Clock enable signal
+Operand enable or block active signal
+Typical application
+UART, GPIO, idle peripheral blocks, inactive registers
+ALU, operand selection logic, address/data path, computation blocks
+Power reduction mechanism
+Stops clock propagation to inactive blocks
+Prevents changing operands from entering inactive logic
+Main advantage
+Effective for reducing clock-network and register power
+Effective for reducing internal switching in 
+datapath
+ logic
+Possible overhead
+Additional clock-gating cells and enable logic
+Additional isolation logic, multiplexers, or gates
+Main risk
+Glitches or timing issues if clock gating is not implemented correctly
+Functional errors or extra delay if isolation control is incorrect
+Suitability in this thesis
+Applied to inactive peripheral or sequential blocks in the PicoRV32-based SoC
+Applied to selected 
+datapath
+ or combinational blocks to reduce redundant switching
+In this thesis, Clock Gating and Operand Isolation are selected because they directly address two major sources of dynamic power consumption in a digital SoC: clock activity and data switching activity. Clock Gating is expected to reduce power consumption in inactive sequential and peripheral blocks, while Operand Isolation is expected to reduce unnecessary switching in computational 
+datapaths
+. By combining these two techniques, the proposed PicoRV32-based SoC can be optimized at the RTL level before being implemented through the ASIC design flow.
+However, the effectiveness of these techniques cannot be evaluated only by theoretical analysis. The optimized design must still preserve the original functionality of the baseline 
+SoC.
+ Therefore, functional simulation is required to verify that instruction execution, memory access, UART communication, and GPIO operation are not affected. After that, both the baseline design and the optimized design should be implemented through the same 
+OpenLane
+/
+SkyWater
+ 130nm ASIC flow to obtain Power, Performance, and Area reports. Through this comparison, the practical benefits and trade-offs of Clock Gating and Operand Isolation can be quantitatively evaluated.
+Figure 2.7. Comparison between Clock Gating and Operand Isolation
+Open-Source ASIC Design Flow for RISC-V SoC Implementation
+After presenting the RISC-V architecture, the PicoRV32 processor core, SoC organization, and RTL-level low-power techniques, it is necessary to discuss the ASIC implementation flow used to evaluate the proposed design. In a digital integrated circuit project, RTL design and functional simulation are only the initial stages. Although simulation can verify whether the hardware description behaves correctly, it does not provide complete information about physical characteristics such as standard-cell area, timing paths, routing congestion, clock tree structure, and post-implementation power consumption. Therefore, an ASIC implementation flow is required to transform the RTL design into a physical layout and to evaluate the design through more realistic technical reports.
+An ASIC design flow generally starts from RTL source code written in a hardware description language such as Verilog or VHDL. The RTL design describes the functional behavior and structural organization of the system, including the processor 
+core, memory interface, bus logic, and peripheral modules. After RTL simulation confirms that the design operates correctly, the design is synthesized into a gate-level netlist using a specific standard-cell library. This synthesis stage maps the RTL logic into technology-dependent logic cells such as gates, flip-flops, multiplexers, buffers, and clock-gating cells.
+After synthesis, the design enters the physical implementation stage. This stage includes 
+floorplanning
+, placement, clock tree synthesis, routing, and physical verification. 
+Floorplanning
+ defines the overall layout area, the location of major blocks, input/output pins, power distribution, and utilization targets. Placement arranges the standard cells inside the chip area according to timing and congestion constraints. Clock tree synthesis builds a clock distribution network to deliver the clock signal to sequential elements while controlling skew and delay. Routing then connects all placed cells using metal layers according to the design rules of the target technology. Finally, physical verification is performed to check design-rule compliance, layout correctness, and other implementation constraints.
+For a low-power RISC-V SoC, the ASIC flow plays an important role because it allows the designer to evaluate the effects of RTL-level optimization techniques after physical implementation. Techniques such as Clock Gating and Operand Isolation may reduce switching activity at the RTL level, but they may also introduce additional logic, area overhead, or timing impact. Therefore, their effectiveness must be evaluated not only through functional simulation but also through power, performance, and area reports generated by the implementation flow.
+In recent years, open-source ASIC design flows have become increasingly important in academic research and education. Traditionally, ASIC implementation required expensive commercial EDA tools and proprietary process design kits, which limited access for students and research groups. The emergence of open-source tools and open process design kits has created more opportunities for learning and experimenting with digital chip design. With these tools, researchers can perform a relatively complete RTL-to-GDSII flow, including synthesis, 
+floorplanning
+, placement, routing, and report generation.
+In this thesis, the open-source ASIC implementation direction is suitable because the proposed system is based on open and customizable components. The RISC-V instruction set architecture is open, the PicoRV32 processor core is available as an open-source RTL design, and the implementation flow can be built using open-source EDA tools. This combination supports the research objective of designing and evaluating a 
+low-power SoC in an accessible and reproducible environment. Instead of only describing the architecture theoretically, the design can be implemented through a practical flow to obtain layout and PPA results.
+The general ASIC flow used for the proposed PicoRV32-based SoC can be summarized as follows. First, the RTL source code of the baseline and optimized SoC designs is prepared. Second, functional simulation is performed to verify instruction execution, memory access, UART communication, and GPIO operation. Third, the verified RTL design is passed through synthesis to generate a gate-level representation. Fourth, the design is physically implemented through 
+floorplanning
+, placement, clock tree synthesis, and routing. Finally, the generated reports are analyzed to compare power consumption, timing performance, and area between the baseline and optimized versions.
+By using an open-source ASIC flow, this thesis can evaluate the proposed low-power RISC-V SoC at both the logical and physical levels. This is important because the main objective of the thesis is not only to build a functional SoC, but also to demonstrate whether RTL-level low-power techniques can provide practical benefits after ASIC implementation. Therefore, the open-source ASIC design flow provides the technical foundation for the experimental evaluation presented in the later chapters.
+Figure 2.8. Open-source ASIC design flow for RISC-V SoC implementation
+OpenLane ASIC Design Flow
+OpenLane
+ is an open-source ASIC design flow used to convert a digital design from RTL description to physical GDSII layout. It integrates multiple open-source EDA tools to support the main stages of ASIC implementation, including logic synthesis, 
+floorplanning
+, placement, clock tree synthesis, routing, timing analysis, and physical verification. In this thesis, 
+OpenLane
+ is selected as the main implementation flow because it allows the proposed PicoRV32-based SoC to be evaluated not only at the RTL simulation level but also at the physical design level.
+The input of the 
+OpenLane
+ flow includes Verilog RTL source files, design configuration files, timing constraints, and technology-related files from the target process design kit. For the proposed SoC, the RTL source files include the PicoRV32 processor core, SRAM or memory interface, system bus logic, UART, GPIO, and additional RTL-level low-power optimization logic. The configuration file defines important parameters such as the top-level module name, clock period, target utilization, placement density, routing options, and standard-cell library settings. These parameters directly affect timing, area, routing quality, and power estimation.
+The first major stage in 
+OpenLane
+ is logic synthesis. In this stage, the RTL design is translated into a gate-level netlist by mapping the Verilog description into standard cells. These cells may include logic gates, multiplexers, flip-flops, buffers, and other technology-dependent components. For a low-power design, this stage is important because the synthesis result shows the initial hardware cost of the design, including cell count, estimated area, and preliminary timing information.
+After synthesis, the design moves to the 
+floorplanning
+ stage. 
+Floorplanning
+ defines the basic physical structure of the chip, including the core area, aspect ratio, pin placement, utilization target, and power distribution. In a SoC design, 
+floorplanning
+ is important because the placement of the CPU, bus logic, memory-related circuits, and peripherals can influence wirelength, routing congestion, timing paths, and power consumption. A suitable floorplan can improve the quality of later physical implementation stages.
+The next stage is placement. During placement, the standard cells generated from synthesis are arranged inside the defined core area. The goal of placement is to place cells efficiently while satisfying timing and physical constraints. Poor placement may result in long interconnects, high congestion, larger delay, and higher power consumption. Therefore, placement quality has a direct influence on the final performance and implementation quality of the 
+SoC.
+After placement, 
+OpenLane
+ performs Clock Tree Synthesis. In a synchronous digital circuit, the clock signal must be distributed to all sequential elements such as flip-flops and registers. Clock Tree Synthesis builds a clock distribution network while controlling clock skew and insertion delay. This stage is especially important in low-power designs because the clock network is one of the major sources of dynamic power consumption. If Clock Gating is applied in the RTL design, its interaction with the clock tree should be considered during physical implementation.
+The routing stage connects all placed cells using metal layers according to the design rules of the selected technology. Routing creates the physical interconnections between logic cells, registers, clock networks, power nets, and signal paths. The routing result affects parasitic capacitance, timing delay, congestion, and power consumption. After routing, the design becomes much closer to the final physical chip layout.
+Physical verification is performed near the end of the 
+OpenLane
+ flow. This stage checks whether the generated layout satisfies the required physical and manufacturing rules. Common checks include Design Rule Check, Layout Versus Schematic, and antenna checking. These checks help ensure that the final layout is physically valid and consistent with the synthesized netlist. If the design passes the required checks, the flow can generate the final GDSII layout file.
+In this thesis, the reports generated by 
+OpenLane
+ are important for evaluating the effectiveness of the proposed low-power design. The timing report is used to evaluate whether the design satisfies the target clock period. The area report is used to determine the hardware cost of the baseline and optimized designs. The power report is used to analyze whether Clock Gating and Operand Isolation can reduce dynamic power consumption. Therefore, 
+OpenLane
+ provides the necessary reports for comparing Power, Performance, and Area metrics.
+For a fair comparison, both the baseline PicoRV32-based SoC and the optimized low-power SoC should be implemented using the same 
+OpenLane
+ flow, the same target technology, and the same design constraints. If different settings are used, the comparison may not accurately reflect the impact of the proposed optimization techniques. Therefore, the implementation environment must be kept consistent when comparing the baseline design and the optimized design.
+Table 2.2. Main stages of the 
+OpenLane
+ ASIC design flow
+Stage
+Main Function
+Output
+RTL preparation
+Prepare Verilog source files and the top-level SoC module
+Synthesizable RTL design
+Configuration setup
+Define top module, clock period, PDK, utilization, and flow parameters
+OpenLane
+ configuration files
+Logic synthesis
+Convert RTL into a gate-level netlist using standard cells
+Gate-level netlist and synthesis reports
+Floorplanning
+Define core area, pin placement, utilization, and power planning
+Initial physical layout structure
+Placement
+Place standard cells inside the defined core area
+Placed design database
+Clock Tree Synthesis
+Build the clock distribution network for sequential elements
+Clock tree with controlled skew and delay
+Routing
+Connect cells and signal paths using metal layers
+Routed physical design
+Physical verification
+Check DRC, LVS, antenna, and layout correctness
+Verification reports
+GDSII generation
+Export the final physical layout
+GDSII layout file
+Report analysis
+Analyze timing, power, and area reports
+PPA evaluation results
+In summary, 
+OpenLane
+ provides a practical implementation flow for transforming the proposed low-power RISC-V SoC from RTL source code into a physical GDSII layout. By using this flow, the thesis can evaluate the design through both functional verification and ASIC-level implementation reports. Therefore, 
+OpenLane
+ plays an important role in connecting RTL-level low-power optimization with Power, Performance, and Area evaluation.
+Figure 2.9. 
+OpenLane
+ ASIC design flow for the proposed PicoRV32-based
+ 
+SoC
+SkyWater 130nm Technology 
+SkyWater
+ 130nm, commonly referred to as SKY130, is an open-source process design kit based on a 130nm CMOS technology platform. In an ASIC design flow, the target technology plays an important role because it defines the physical rules, standard cells, device models, timing information, and layout constraints used during implementation. Therefore, selecting a suitable technology platform is necessary for transforming an RTL design into a physical layout and for obtaining meaningful Power, Performance, and Area reports.
+A Process Design Kit, or PDK, is a collection of technology files and design information provided for a specific semiconductor process. It usually includes standard-cell libraries, device models, layout design rules, extraction rules, timing libraries, and verification files. These components allow EDA tools to understand how the RTL design should be mapped, placed, routed, and verified under a specific fabrication technology. Without a PDK, the ASIC flow cannot accurately generate a physical layout or estimate timing, area, and power characteristics.
+The 
+SkyWater
+ 130nm technology is important in open-source ASIC design because it provides a publicly accessible technology platform for education, research, and experimental chip design. In traditional ASIC design, access to commercial PDKs is often restricted by non-disclosure agreements and licensing requirements. This creates a significant barrier for students and academic research groups. The availability of 
+SKY130 helps reduce this barrier by allowing designers to study and practice a relatively complete digital ASIC flow using open-source tools.
+In this thesis, 
+SkyWater
+ 130nm is used as the target technology for implementing the proposed PicoRV32-based low-power 
+SoC.
+ The RTL design is first verified through simulation and then passed through the 
+OpenLane
+ flow using the SKY130 technology files. During this process, the RTL design is synthesized into standard cells from the SKY130 library. These cells are then placed and routed according to the physical design rules of the technology. As a result, the final output can include a GDSII layout and implementation reports.
+For a low-power RISC-V SoC, the technology library strongly affects the obtained Power, Performance, and Area results. The area report depends on the size and number of standard cells used after synthesis. The timing report depends on cell delays, interconnect delays, and clock distribution characteristics. The power report depends on cell power models, switching activity, capacitance, voltage, and implementation conditions. Therefore, using a defined technology such as SKY130 allows the baseline and optimized designs to be compared under the same physical assumptions.
+The use of 
+SkyWater
+ 130nm is also suitable for this thesis because the target design is a compact embedded SoC rather than a high-performance commercial processor. A 130nm technology node is mature and appropriate for educational ASIC implementation, simple digital systems, microcontroller-like designs, and low-complexity SoC prototypes. Although it is not the most advanced semiconductor technology node, it is sufficient for evaluating RTL-level design techniques such as Clock Gating and Operand Isolation. The objective of the thesis is not to achieve the highest possible operating frequency, but to compare the effect of low-power optimization techniques under a consistent implementation environment.
+Another advantage of SKY130 is its compatibility with open-source EDA flows. In combination with 
+OpenLane
+, SKY130 enables the design to go through synthesis, 
+floorplanning
+, placement, clock tree synthesis, routing, physical verification, and GDSII generation. This is important for the thesis because it connects the theoretical design of a low-power RISC-V SoC with a practical ASIC implementation process. Through this flow, the design can be evaluated not only by waveform simulation but also by physical design reports.
+However, the use of 
+SkyWater
+ 130nm also has certain limitations. The power and timing results obtained from the 
+OpenLane
+/SKY130 flow are implementation-based estimates and may differ from measurements on fabricated silicon. In addition, this 
+thesis does not include chip fabrication, packaging, or post-silicon measurement. Therefore, the SKY130-based results should be interpreted as post-synthesis or post-layout evaluation results within the selected open-source ASIC design environment, rather than as final silicon measurement data.
+In this thesis, both the baseline SoC and the optimized low-power SoC are implemented using the same 
+SkyWater
+ 130nm technology. This ensures that the comparison between the two designs is fair and consistent. If the same technology library, design constraints, and implementation flow are used, the difference in Power, Performance, and Area results can be mainly attributed to the RTL-level optimization techniques applied to the design. Therefore, 
+SkyWater
+ 130nm serves as the common technology foundation for evaluating the effectiveness of the proposed low-power RISC-V 
+SoC.
+Table 2.3. Role of 
+SkyWater
+ 130nm technology in this thesis
+Aspect
+Role in the Thesis
+Target technology
+Provides the CMOS technology platform for ASIC implementation
+Standard-cell library
+Maps RTL logic into physical logic cells during synthesis
+Timing information
+Supports timing analysis and target clock evaluation
+Power models
+Supports estimation of power consumption after implementation
+Physical design rules
+Guides 
+floorplanning
+, placement, routing, and layout verification
+Open-source accessibility
+Enables academic ASIC design using open-source tools
+PPA comparison
+Provides the same technology basis for comparing baseline and optimized SoC designs
+Final output support
+Enables generation of GDSII layout and implementation reports
+In summary, 
+SkyWater
+ 130nm provides the technology foundation required to implement and evaluate the proposed PicoRV32-based low-power SoC through the 
+OpenLane
+ ASIC flow. By using SKY130, the thesis can obtain physical design outputs such as GDSII layout, timing reports, area reports, and power reports. This allows the effectiveness of Clock Gating and Operand Isolation to be evaluated more realistically than through RTL simulation alone.
+Figure 2.10. Role of 
+SkyWater
+ 130nm technology in the ASIC implementation flow
+Power, Performance, and Area Evaluation
+Power, Performance, and Area, commonly abbreviated as PPA, are three important evaluation metrics in digital integrated circuit design. These metrics are widely used to analyze the quality of an ASIC design after synthesis and physical implementation. In the context of this thesis, PPA evaluation is necessary to compare the baseline PicoRV32-based SoC and the optimized low-power SoC using the same 
+OpenLane
+ and 
+SkyWater
+ 130nm implementation flow.
+The first metric is power consumption. Power is one of the most important criteria for embedded systems, IoT devices, and edge computing applications because these systems often operate under limited energy resources. In digital CMOS circuits, power consumption generally includes static power and dynamic power. Static power is mainly related to leakage current, while dynamic power is mainly caused by switching activity in clock networks, registers, buses, and combinational logic. Since this thesis focuses on RTL-level low-power optimization, the main objective is to reduce dynamic power consumption by reducing unnecessary clock and data switching activities.
+In the proposed SoC, Clock Gating is expected to reduce dynamic power by disabling the clock signal of inactive sequential blocks such as peripheral modules or unused registers. Operand Isolation is expected to reduce dynamic power by preventing unnecessary operand transitions from entering combinational 
+datapath
+ blocks such as the ALU or related logic. Therefore, the power report generated after ASIC implementation is used to evaluate whether these techniques can effectively reduce the total power or dynamic power of the system.
+The second metric is performance. In ASIC design, performance is commonly evaluated through timing analysis and the ability of the design to satisfy a target clock period. A design with better timing can operate at a higher clock frequency or has more timing margin under the same frequency constraint. In the 
+OpenLane
+ flow, performance can be analyzed through timing reports, including worst negative slack, total negative slack, critical path delay, and maximum achievable frequency. If the design satisfies the required clock period, it can be considered timing-closed under the selected implementation condition.
+For this thesis, performance evaluation is important because low-power optimization techniques may introduce additional logic into the design. For example, Clock Gating requires enable control logic and clock-gating cells. Operand Isolation may add multiplexers or logic gates at the input of combinational blocks. These additional circuits may affect the critical path and increase delay. Therefore, the optimized design must be checked carefully to ensure that power reduction does not cause serious timing degradation.
+The third metric is area. Area represents the amount of hardware resources required to implement the design. In ASIC implementation, area can be evaluated through the number of standard cells, total cell area, core area, and utilization information. A smaller area is generally desirable because it can reduce manufacturing cost and improve integration density. However, low-power optimization techniques may increase area because they require additional control logic, clock-gating cells, isolation multiplexers, or other supporting circuits.
+In this thesis, area evaluation is used to determine the hardware overhead introduced by Clock Gating and Operand Isolation. If the optimized design achieves power reduction with only a small area increase, the optimization can be considered effective. However, if the area overhead is too large compared with the achieved power saving, the optimization may not be efficient. Therefore, area must be analyzed together with power and performance instead of being evaluated independently.
+PPA evaluation is important because these three metrics are closely related and often involve trade-offs. Reducing power may require additional hardware, which can increase area. Improving performance may require more buffers or stronger cells, which can increase both area and power. Reducing area too aggressively may create timing problems or routing congestion. Therefore, a good ASIC design must balance power, performance, and area according to the target application.
+For the proposed low-power RISC-V SoC, the main evaluation target is power reduction while maintaining acceptable performance and area overhead. Since the system targets embedded and IoT-oriented applications, reducing power consumption is the primary objective. However, the optimized design must still satisfy the target clock period and should not introduce excessive hardware cost. Therefore, the final evaluation should consider the balance among all three PPA metrics.
+To ensure a fair evaluation, both the baseline SoC and the optimized low-power SoC should be implemented using the same ASIC design flow, the same 
+SkyWater
+ 130nm technology, the same clock constraint, and the same general implementation settings. If these conditions are kept consistent, the difference in PPA results can be mainly attributed to the applied RTL-level low-power techniques. This comparison provides a quantitative basis for evaluating the effectiveness of Clock Gating and Operand Isolation in the proposed design.
+Table 2.4. Meaning of PPA metrics in this thesis
+Metric
+Meaning
+Evaluation Source
+Role in This Thesis
+Power
+Total, static, and dynamic power consumption of the SoC
+OpenLane
+ power report
+Evaluate the power reduction achieved by Clock Gating and Operand Isolation
+Performance
+Timing quality and ability to satisfy the target clock period
+OpenLane
+ timing report
+Check whether the optimized design still meets timing requirements
+Area
+Hardware cost of the implemented design
+OpenLane
+ area report and utilization report
+Measure the area overhead introduced by low-power optimization logic
+The PPA comparison between the baseline and optimized designs can be expressed using relative improvement values. For example, power reduction can be calculated by comparing the power of the baseline design with the power of the optimized design. Similarly, area overhead can be calculated by comparing the area after optimization with the original area. These values help present the experimental results more clearly in Chapter 4.
+In summary, Power, Performance, and Area evaluation provides the main quantitative foundation for assessing the proposed low-power RISC-V 
+SoC.
+ Power analysis shows the effectiveness of the low-power techniques, performance analysis ensures that the design can operate under the target timing constraint, and area analysis shows the hardware overhead of the optimization. Therefore, PPA evaluation is a necessary step to demonstrate whether the proposed RTL-level optimizations are practically useful after ASIC implementation.
+Figure 2.11. PPA evaluation for the proposed low-power RISC-V SoC
+<
+ Related Work and Research Gap 
+>
+<
+ 
+RISC-V-based processor and SoC design has become an active research direction in both academic and industrial environments. Due to its open instruction set architecture, modular structure, and growing ecosystem, RISC-V provides a flexible platform for developing customized processors and embedded SoC systems. Many previous studies have focused on designing RISC-V processor cores, integrating RISC-V cores into SoC platforms, optimizing hardware resources, and implementing digital systems using FPGA or ASIC design flows.
+One common research direction is the development of compact RISC-V processor cores for embedded applications. These works usually focus on implementing the RV32I base instruction set, reducing hardware complexity, improving instruction execution efficiency, or adapting the processor architecture for resource-constrained systems. Compact cores such as PicoRV32 are suitable for simple embedded systems because they require fewer hardware resources than complex pipelined or superscalar processors. However, many works in this direction mainly emphasize functional correctness, area reduction, or FPGA-based implementation rather than detailed low-power optimization and ASIC-level PPA evaluation.
+Another related direction is RISC-V-based SoC integration. In these works, a RISC-V processor core is connected with memory, system bus logic, and peripheral modules such as UART, GPIO, timers, SPI, or other interfaces. The purpose is to build a complete embedded platform capable of executing firmware and communicating with external devices. This direction is closely related to the objective of this thesis because a practical chip-based system requires more than only a processor core. Nevertheless, many basic SoC designs stop at RTL simulation or FPGA verification, while post-synthesis and post-layout ASIC evaluation are not always fully investigated.
+Low-power design is also an important research topic in digital integrated circuits. Several techniques have been proposed to reduce power consumption at different abstraction levels, including clock gating, operand isolation, power gating, multi-threshold cell design, voltage scaling, frequency scaling, and software-level power management. Among these techniques, Clock Gating and Operand Isolation are suitable for RTL-level implementation because they directly target dynamic power consumption caused by unnecessary clock activity and data switching activity. Clock Gating can reduce redundant switching in sequential blocks, while Operand Isolation can reduce unnecessary transitions in combinational 
+datapaths
+.
+However, in many related studies, low-power techniques are often discussed as general design methods or applied to isolated circuit blocks. Some works focus only on reducing power in a particular module, such as an ALU, register file, or peripheral block. Others may evaluate power reduction only at the RTL or synthesis level. For a complete embedded SoC, the effectiveness of low-power techniques should be evaluated at the system level because power consumption depends on the interaction among the CPU core, memory, bus, and peripherals. Therefore, applying and evaluating Clock Gating and Operand Isolation in a PicoRV32-based SoC provides a more complete perspective than studying each technique separately.
+The development of open-source ASIC design flows has also created new opportunities for academic research. Tools such as 
+OpenLane
+, together with the 
+SkyWater
+ 130nm technology platform, allow designers to implement RTL designs through a relatively complete ASIC flow, from synthesis to GDSII layout generation. This makes it possible to evaluate timing, area, power, and physical design quality without relying entirely on commercial EDA tools. As a result, open-source ASIC flows are suitable for graduation projects and research topics related to digital IC design, processor implementation, and SoC evaluation.
+Although existing works provide important foundations, several limitations can still be observed. First, many RISC-V processor studies focus on processor architecture or instruction execution but do not deeply analyze system-level power behavior after SoC integration. Second, many low-power design studies explain Clock Gating or Operand Isolation conceptually, but do not apply both techniques together in a complete RISC-V-based 
+SoC.
+ Third, some works stop at RTL simulation or FPGA implementation, which does not fully reflect ASIC physical factors such as standard-cell area, timing paths, clock tree structure, routing 
+parasitics
+, and post-layout power estimation. Fourth, the trade-off among power reduction, performance impact, and area overhead is not always evaluated under the same implementation flow.
+From these limitations, the research gap of this thesis can be identified as the lack of a complete experimental approach that combines RISC-V SoC integration, RTL-level low-power optimization, open-source ASIC implementation, and PPA-based evaluation. Specifically, there is a need to build a compact PicoRV32-based SoC, apply Clock Gating and Operand Isolation to reduce dynamic power, verify the functional correctness of the optimized design, and then implement both the baseline and optimized versions through the same 
+OpenLane
+/
+SkyWater
+ 130nm flow. This approach allows the effectiveness of the proposed optimization techniques to be evaluated quantitatively.
+The proposed thesis addresses this gap by developing a low-power RISC-V SoC based on the PicoRV32 core. The system integrates essential components such as SRAM or memory interface, system bus, UART, and GPIO. Clock Gating is applied to reduce unnecessary clock activity in inactive sequential or peripheral blocks, while Operand Isolation is used to reduce redundant switching in selected combinational 
+datapath
+ regions. After functional verification, the baseline and optimized designs are implemented through the same ASIC flow to extract Power, Performance, and Area reports. Therefore, the thesis contributes not only to building a functional RISC-V SoC, but also to evaluating the practical trade-offs of RTL-level low-power techniques after 
+Table 2.5. Summary of related work limitations and thesis direction
+Related Work Aspect
+Common Limitation
+Direction in This Thesis
+RISC-V processor design
+Often focuses on CPU core functionality or architecture only
+Uses PicoRV32 as the CPU core and integrates it into a complete embedded SoC
+Basic RISC-V SoC integration
+Many designs stop at RTL simulation or FPGA-level verification
+Implements the SoC through an ASIC flow using 
+OpenLane
+ and SKY130
+Low-power design techniques
+Clock Gating or Operand Isolation may be studied separately or conceptually
+Applies both Clock Gating and Operand Isolation at the RTL level
+Power evaluation
+Power may be estimated only for isolated blocks or early design stages
+Evaluates power at the SoC level after ASIC implementation
+Performance evaluation
+Timing impact of low-power logic may not be fully analyzed
+Uses timing reports to check whether the optimized design satisfies the target clock constraint
+Area evaluation
+Hardware overhead may not be compared clearly
+Compares area between the baseline and optimized SoC designs
+Overall design comparison
+Baseline and optimized versions may not be implemented under identical conditions
+Uses the same 
+OpenLane
+/SKY130 flow and constraints for fair PPA comparison
+In summary, the related works show that RISC-V architecture, PicoRV32-based systems, low-power RTL techniques, and open-source ASIC flows are all important foundations for this thesis. However, there remains a need for a complete design and evaluation process that connects these elements into a single research direction. Therefore, this thesis focuses on designing a PicoRV32-based low-power SoC, applying 
+Clock Gating and Operand Isolation, implementing the design through 
+OpenLane
+/
+SkyWater
+ 130nm, and comparing the baseline and optimized designs using Power, Performance, and Area metrics.
+Figure 2.12. Research gap and proposed thesis direction
+PROPOSED RESEARCH APPROACHES
+Overall System Model of the Proposed SoC
+This section presents the overall system model of the proposed low-power RISC-V System-on-Chip. The proposed SoC is built around the PicoRV32 processor core and integrates essential embedded system components, including program memory, data memory, memory-mapped peripherals, an address decoder, and a Clock Management Unit. The main objective of this system model is to provide a compact RISC-V-based platform that can support functional verification, low-power clock-gating control, and ASIC implementation for Power, Performance, and Area evaluation.
+The overall system model is shown in Figure 3.1. In this architecture, the PicoRV32 processor acts as the central controller of the system. It fetches instructions from ROM, accesses RAM for runtime data and stack operations, and communicates with peripheral modules through a unified memory-mapped bus. Instead of using separate control interfaces for each peripheral, UART, GPIO, and CMU are mapped into the processor address space. Therefore, firmware can control these hardware modules using normal load and store instructions.
+The memory-mapped bus and address decoder are used to connect the processor with different target modules. Based on the address generated by the CPU, the decoder selects one of the available regions, including ROM, RAM, UART, GPIO, or CMU. ROM is used to store firmware instructions, while RAM is used for data storage during program execution. UART provides serial communication, and GPIO provides digital input/output control for observing and interacting with the system during simulation.
+A key feature of the proposed SoC is the Clock Management Unit. The CMU provides software-accessible clock enable control for selected peripherals. In this design, UART and GPIO are supplied by gated clocks generated through clock-gating logic. When a peripheral is not required, firmware can disable its clock through the CMU to reduce unnecessary switching activity. When the peripheral is needed again, firmware can re-enable the corresponding clock. This mechanism forms the main low-power approach of the proposed system.
+The proposed SoC also includes an interrupt path from the UART peripheral to the PicoRV32 processor. When UART receives valid data, it can generate an interrupt request to the CPU. This allows the system to support event-driven operation, where the processor can respond to external communication events instead of continuously polling the UART status. This feature is useful for verifying both interrupt handling and low-power firmware behavior.
+The system model is designed to support two main evaluation directions. First, RTL simulation is used to verify functional correctness, including CPU execution, memory access, peripheral control, interrupt handling, and clock-gating behavior. Second, ASIC implementation using 
+LibreLane
+ and 
+SkyWater
+ 130nm technology is used to generate physical design reports for evaluating Power, Performance, and Area. Therefore, the proposed system model provides the foundation for both functional verification and physical implementation in this thesis.
+Table 3.1. Main components of the proposed SoC
+Component
+Function in the Proposed SoC
+PicoRV32 CPU
+Executes RISC-V firmware and controls memory and peripheral access
+ROM
+Stores firmware instructions and startup code
+RAM
+Stores runtime data, variables, and stack
+Memory-mapped bus
+Provides a unified access path between CPU, memory, and peripherals
+Address decoder
+Selects ROM, RAM, UART, GPIO, or CMU based on CPU address
+UART
+Provides serial communication and receive interrupt support
+GPIO
+Provides digital input/output control and waveform observation points
+CMU
+Controls peripheral clock enable states through software-accessible registers
+Clock-gating logic
+Generates gated clocks for UART and GPIO to reduce switching activity
+Interrupt path
+Connects UART interrupt request to the PicoRV32 interrupt input
+In summary, the proposed system model combines a compact RISC-V processor core, memory blocks, memory-mapped peripherals, interrupt support, and CMU-based clock gating. This architecture is suitable for studying low-power SoC design because it includes both functional embedded-system components and a clear clock-control mechanism. The detailed hardware organization and memory-mapped address structure are presented in the next section.
+Hardware Architecture and Memory-Mapped Organization
+This section describes the hardware architecture and memory-mapped organization of the proposed 
+SoC.
+ Based on the system model presented in Section 3.1, the design is organized as a compact embedded SoC consisting of the PicoRV32 processor core, ROM, RAM, UART, GPIO, Clock Management Unit, and address decoding logic. These modules are integrated through a simple native memory interface, allowing the processor to access both memory and peripherals using the same load/store-based programming model.
+The ASIC-oriented top-level module of the proposed design is 
+soc_top_asic.v
+. This module acts as the main wrapper of the chip-level system. It instantiates and connects the PicoRV32 CPU, bus decoder, ROM, RAM, UART, GPIO, CMU, and clock-gating logic. It also defines the external I/O pins of the design, including the system clock, reset, UART transmit/receive signals, GPIO input/output ports, and external interrupt input. Therefore, 
+soc_top_asic.v
+ provides a clean top-level structure for ASIC implementation using 
+LibreLane
+.
+Figure 3.2. Memory-mapped hardware organization of the proposed SoC
+The PicoRV32 processor core is the central controller of the 
+SoC.
+ It fetches instructions from ROM, performs data access to RAM, and controls peripherals through memory-mapped transactions. Instead of using complex interconnect protocols such as AXI or Wishbone, the design uses the native memory interface of PicoRV32. This interface is based on a simple valid-ready handshake and includes signals such as 
+mem_valid
+, 
+mem_ready
+, 
+mem_addr
+, 
+mem_wdata
+, 
+mem_wstrb
+, and 
+mem_rdata
+. This choice reduces RTL complexity, saves logic resources, and makes the design more suitable for a small ASIC implementation.
+The memory subsystem consists of ROM and RAM. The ROM stores the compiled firmware image and startup code, while the RAM provides storage for runtime data, variables, and stack operations. For the ASIC-oriented version, ROM and RAM are implemented as inferred memories instead of hard SRAM macros. This means that the memories are described as Verilog register arrays and are synthesized into standard-cell logic by the ASIC flow. This approach avoids dependence on external SRAM macro files and improves compatibility with the available 
+LibreLane
+/SKY130 implementation environment.
+Because inferred memory consumes significant standard-cell area, the ASIC version of the design uses a compact memory configuration. The ROM is reduced to 1KB, and the RAM is reduced to 256 Bytes. This size is selected to keep the design small enough for synthesis, placement, and routing while still supporting the firmware required for functional verification. Therefore, the SoC maintains a clear memory-mapped structure while using an ASIC-friendly physical memory implementation.
+The UART and GPIO modules are implemented as memory-mapped peripherals. The UART module provides serial communication through 
+uart_tx
+ and 
+uart_rx
+ signals and supports receive interrupt generation. The GPIO module provides 32-bit digital input/output control through 
+gpio_in
+[31:0] and 
+gpio_out
+[31:0]. These peripherals allow the firmware to communicate with the external environment and provide observable signals during simulation.
+The Clock Management Unit is also mapped into the processor address space. It is used to control the clock enable state of selected peripherals. In the proposed design, CMU controls the gated clocks supplied to UART and GPIO. This allows firmware to disable the clock of inactive peripherals and reduce unnecessary switching activity. The detailed CMU-based clock-gating approach is discussed in Section 3.3.
+The bus decoder divides the processor address space into predefined regions. When the CPU issues a memory transaction, the decoder checks the address and activates the corresponding selection signal for ROM, RAM, UART, GPIO, or CMU. Only the selected module responds to the transaction. This memory-mapped organization provides a simple and deterministic hardware structure for both firmware development and RTL verification.
+Table 3.2. Memory map and ASIC-oriented memory configuration of the proposed SoC
+Module
+Decoded Address Range
+ASIC-Oriented Implementation
+Function
+ROM
+0x0000_0000 – 0x0000_FFFF
+Inferred ROM, 1KB
+Stores firmware instructions and startup code
+RAM
+0x1000_0000 – 0x1000_FFFF
+Inferred RAM, 256 Bytes
+Stores runtime data, variables, and stack
+UART
+0x2000_0000 – 0x2000_0FFF
+Memory-mapped peripheral
+Provides serial communication and RX interrupt
+GPIO
+0x2000_2000 – 0x2000_2FFF
+Memory-mapped peripheral
+Provides 32-bit digital input/output control
+CMU
+0x2000_3000 – 0x2000_3FFF
+Memory-mapped control block
+Controls gated clocks for UART and GPIO
+Unmapped region
+Other address regions
+Safe bus response
+Prevents invalid address access from causing system deadlock
+It should be noted that the decoded address regions and the physical memory sizes are not the same concept. The address decoder reserves a defined address range for ROM and RAM access, while the ASIC-oriented implementation uses compact inferred memories inside those regions. This approach keeps the firmware programming model simple while reducing the physical implementation cost of the memory subsystem.
+For normal memory transactions, the CPU asserts 
+mem_valid
+ and provides the target address through 
+mem_addr
+. For write operations, the CPU also provides 
+mem_wdata
+ and 
+mem_wstrb
+. The selected module completes the transaction by asserting 
+mem_ready
+. For read operations, the selected module returns data through 
+mem_rdata
+. This valid-ready interface is simple and suitable for the compact SoC architecture proposed in this thesis.
+In summary, the hardware architecture of the proposed SoC is built around a compact PicoRV32-based memory-mapped system. The 
+soc_top_asic.v
+ wrapper integrates the CPU, inferred ROM/RAM, UART, GPIO, CMU, bus decoder, and clock-gating logic into a single ASIC-oriented top-level design. The use of a native memory interface, inferred memory, and compact memory sizing helps reduce design complexity and supports the later ASIC implementation using 
+LibreLane
+. This hardware organization forms the foundation for the CMU-based clock-gating approach presented in the next section.
+CMU-Based Clock Gating Approach
+This section presents the proposed low-power approach based on the Clock Management Unit and clock-gating logic. In the proposed SoC, the CMU is responsible for controlling the clock activity of selected peripheral modules. Instead of allowing all peripherals to receive the system clock continuously, the design uses gated clocks for UART and GPIO. This approach helps reduce unnecessary switching activity when these peripherals are not required.
+The CMU is implemented as a memory-mapped control block. Therefore, the PicoRV32 processor can configure the CMU through normal load and store instructions. Firmware writes to the CMU clock enable register to enable or disable the clocks of UART and GPIO. This makes the clock control mechanism programmable and allows the low-power behavior of the SoC to be managed by software.
+The proposed clock-gating architecture is shown in Figure 3.3.
+Figure 3.3. CMU-based clock gating architecture
+The CMU contains clock enable bits for the clock-gated peripherals. In this design, bit 0 controls the UART clock and bit 1 controls the GPIO clock. When an enable bit is set to 1, the corresponding peripheral receives an active gated clock. When an enable bit is cleared to 0, the corresponding gated clock stops toggling. Table 3.3 summarizes the CMU clock enable register.
+Table 3.3. CMU clock enable register definition
+Bit
+Signal
+Controlled Module
+Description
+clk_en
+[0]
+uart_clk_en
+UART
+1: UART clock enabled; 0: UART clock gated
+clk_en
+[1]
+gpio_clk_en
+GPIO
+1: GPIO clock enabled; 0: GPIO clock gated
+The gated clocks are generated using the 
+icg_cell.v
+ module. This module represents an integrated clock-gating structure. It uses a latch to hold the enable value and an AND gate to generate the gated clock. This structure is safer than directly gating the clock using a simple combinational enable signal, because it reduces the risk of glitches on the clock output. In the proposed design, two ICG cells are used: one for UART and one for GPIO.
+The original system clock is not connected directly to UART and GPIO. Instead, it passes through the ICG cells before reaching these peripherals. The output clocks are named 
+gclk_uart
+ and 
+gclk_gpio
+. When 
+uart_clk_en
+ is active, 
+gclk_uart
+ follows the system clock and the UART can operate normally. When 
+uart_clk_en
+ is inactive, 
+gclk_uart
+ stops toggling and the UART sequential logic no longer receives active clock edges. The same principle is applied to GPIO through 
+gpio_clk_en
+ and 
+gclk_gpio
+.
+The CMU-based clock gating mechanism can be controlled dynamically by firmware. For example, firmware can write 0x00000003 to enable both UART and GPIO clocks. It can write 0x00000000 to disable both peripheral clocks. It can also write 0x00000002 to enable only the GPIO clock while keeping the UART clock gated. This behavior allows the firmware to activate only the required peripheral during a specific operating phase.
+The use of clock gating is especially suitable for UART and GPIO because these peripherals do not need to be active all the time. UART is mainly required during serial communication, while GPIO is required only when input/output operations are performed. During inactive periods, disabling their clocks can reduce redundant clock switching and contribute to lower dynamic power consumption.
+An important design consideration is bus safety when a peripheral clock is gated. If the CPU accesses UART or GPIO while its clock is disabled, the peripheral may not be able to return a normal ready response. To prevent the processor from waiting indefinitely, the top-level SoC provides a safe bus response for accesses to gated 
+peripherals. This mechanism prevents system deadlock while still allowing the peripheral clock to remain disabled.
+It should be noted that the proposed technique is Clock Gating, not Power Gating. Clock Gating disables the clock signal supplied to selected logic blocks, while the power supply remains connected. Therefore, UART and GPIO are not physically powered off; only their clock activity is controlled. This distinction is important because the proposed design focuses on reducing dynamic switching activity at the RTL and ASIC implementation levels.
+In summary, the CMU-based clock gating approach provides the main low-power mechanism of the proposed 
+SoC.
+ The CMU allows firmware to control the clock enable state of UART and GPIO through memory-mapped registers. The ICG cells generate gated clocks in a glitch-aware manner, and the top-level bus protection avoids deadlock during gated peripheral access. This approach forms the technical basis for the low-power behavior evaluated in later simulation and ASIC implementation results.
+Firmware-Based Functional Verification Methodology
+This section presents the firmware-based functional verification methodology used for the proposed 
+SoC.
+ Besides module-level RTL simulation, firmware execution is required to verify the system from a processor-centered perspective. In this approach, C and assembly programs are compiled into firmware images, loaded into the ROM, and executed by the PicoRV32 processor during RTL simulation. This allows the complete interaction among CPU, memory, bus, peripherals, interrupt logic, and clock-gating control to be verified.
+The firmware-based verification flow is shown in Figure 3.4.
+Figure 3.4. Firmware-based functional verification flow
+The firmware environment consists of startup code, linker script, and C test programs. The startup files, such as 
+start.S
+ and 
+irq_start.S
+, are responsible for the initial boot sequence after reset. They initialize the stack pointer, prepare the program execution environment, and transfer control to the main() function. For interrupt-based verification, 
+irq_start.S
+ also defines the interrupt vector and supports returning from the interrupt routine.
+The linker script defines the memory layout used by the firmware. Program code is placed in the ROM address region starting from 0x0000_0000, while runtime data and stack are placed in the RAM address region starting from 0x1000_0000. This memory layout matches the memory-mapped organization of the SoC and allows the processor to boot from ROM and use RAM during program execution.
+Three main firmware programs are used in this thesis. The first program is 
+main.c
+, which is used as a general functional test. It verifies that the SoC can boot correctly, execute firmware, access memory-mapped peripherals, transmit data through UART, and toggle GPIO outputs. This firmware provides a basic confirmation that the processor, memory, bus, UART, GPIO, and CMU can operate together.
+The second program is 
+main_gating.c
+, which is used to verify the CMU-based clock-gating mechanism. This firmware writes different values to the CMU clock enable register to enable and disable the gated clocks of UART and GPIO. During simulation, the expected behavior is that the gated clocks stop toggling when disabled and resume operation when enabled again. This firmware is important because it directly verifies the proposed low-power control mechanism.
+The third program is 
+main_irq.c
+, which is used to verify interrupt-based operation. In this scenario, the processor can remain in an idle or wait-for-interrupt style loop while waiting for UART receive activity. When UART receives valid data, it asserts an interrupt request to the PicoRV32 processor. The interrupt routine then handles the event and updates an observable indicator, such as GPIO output. This verifies the UART receive path, interrupt connection, CPU interrupt response, and interrupt service flow.
+Table 3.4. Firmware programs used for verification
+Firmware File
+Related Support Files
+Main Verification Purpose
+main.c
+start.S
+, 
+linker.ld
+Verifies basic SoC boot, UART operation, GPIO activity, and MMIO access
+main_gating.c
+start.S
+, 
+linker.ld
+Verifies firmware control of CMU and gated clocks for UART/GPIO
+main_irq.c
+irq_start.S
+, 
+linker.ld
+Verifies UART receive interrupt, interrupt vector, CPU response, and GPIO indication
+Firmware-based verification provides several advantages. First, it verifies the hardware through real processor execution instead of only applying direct testbench stimulus. Second, it checks whether the firmware programming model is consistent with the hardware memory map. Third, it allows system-level features such as interrupt handling and clock-gating control to be tested under realistic operating conditions.
+During RTL simulation, the firmware behavior is observed through both console logs and waveform signals. Important signals include CPU memory transactions, UART transmit and receive activity, GPIO output changes, interrupt signals, CMU clock enable state, and gated clocks. The detailed waveform results are not presented in this chapter. Instead, they are analyzed in Chapter 4 as experimental evidence of functional correctness.
+In summary, firmware-based functional verification is used to validate the proposed SoC at the system level. The basic firmware confirms normal SoC operation, the clock-gating firmware verifies CMU-based low-power control, and the interrupt firmware verifies event-driven UART interrupt handling. This methodology provides a strong bridge between RTL design and the simulation results presented in the next chapter.
+RTL Simulation and ASIC Implementation Flow
+This section presents the RTL simulation strategy and ASIC implementation flow used to verify and evaluate the proposed 
+SoC.
+ After the hardware architecture and firmware-based verification method have been defined, the design must be checked through simulation before being passed to physical implementation. In this thesis, RTL simulation is used to confirm functional correctness, while ASIC implementation using 
+LibreLane
+ and 
+SkyWater
+ 130nm technology is used to obtain Power, Performance, and Area reports.
+The verification and implementation methodology is divided into two main stages. The first stage is RTL functional simulation. This stage verifies whether each module and the complete SoC behave correctly. The second stage is ASIC implementation. This stage transforms the verified RTL into a physical layout and generates implementation reports. Together, these two stages ensure that the proposed SoC is not only functionally correct but also suitable for physical design evaluation.
+The RTL simulation flow is shown in Figure 3.5. The input includes RTL source files, firmware HEX files, and testbench files. The testbench generates clock and reset signals, applies input stimulus, observes internal signals, and checks the expected behavior. The main outputs of simulation are console logs and waveform files. Console logs are used for quick PASS/FAIL checking, while waveforms are used for detailed signal analysis in Chapter 4.
+Figure 3.5. RTL simulation and verification hierarchy
+In the module-level simulation stage, individual RTL blocks are verified before full SoC integration. ROM and RAM are tested for memory access behavior. UART is tested for transmit, receive, status, and interrupt operation. GPIO is tested for input, output, direction, and toggle operation. CMU is tested for clock enable register access 
+and gated-clock control. The bus decoder is tested to ensure that each address region selects the correct target module.
+In the SoC-level simulation stage, the complete system is simulated with the PicoRV32 processor executing firmware from ROM. This stage verifies the interaction among CPU, memory, bus, UART, GPIO, CMU, and interrupt logic. If GPIO activity, UART behavior, interrupt response, and CMU clock control can be observed correctly, the SoC is considered functionally valid for the selected verification scenarios.
+Table 3.5. RTL testbenches used for functional verification
+Verification Level
+Testbench
+Main Verification Purpose
+Module-level
+tb_rom.v
+Verifies ROM read behavior and ready response
+Module-level
+tb_ram.v
+Verifies RAM read/write behavior and byte-write support
+Module-level
+tb_gpio.v
+Verifies GPIO input, output, direction, toggle, and register readback
+Module-level
+tb_real_uart.v
+Verifies UART transmit, receive, status, RX data, and interrupt behavior
+Module-level
+tb_cmu.v
+Verifies CMU register access and gated-clock behavior
+Bus/MMIO-level
+tb_decoder.v
+Verifies address decoding for ROM, RAM, UART, GPIO, CMU, and unmapped regions
+Integrated-level
+tb_phase2_mmio_irq_gating.v
+Verifies MMIO access, interrupt behavior, clock gating, and safe bus response
+SoC-level
+tb_soc_top_smoke.v
+Verifies complete SoC boot and basic firmware execution
+SoC-level
+tb_soc_top_irq.v
+Verifies UART receive interrupt at full SoC level
+Firmware-level
+tb_phase3_firmware_focus.v
+Verifies firmware-driven UART interrupt behavior
+Firmware-level
+tb_phase3_fw_clock_gating.v
+Verifies firmware-controlled CMU and gated-clock operation
+The detailed waveform results are not included in this chapter. Instead, this chapter only defines the verification strategy and expected observation points. The actual waveforms for memory access, bus decoding, GPIO operation, UART communication, interrupt handling, and clock-gating behavior are presented in Chapter 4. This organization keeps Chapter 3 focused on methodology and keeps Chapter 4 focused on experimental evidence.
+After RTL simulation, the design is prepared for ASIC implementation. The ASIC implementation flow used in this thesis is shown in Figure 3.6. The verified RTL design is used as the input of the 
+LibreLane
+ flow. The main implementation stages include RTL preparation, 
+LibreLane
+ configuration, logic synthesis, 
+floorplanning
+, placement, Clock Tree Synthesis, routing, physical verification, and final report generation.
+Figure 3.6. ASIC implementation and PPA evaluation flow using 
+LibreLane
+/SKY130
+In the RTL preparation stage, the ASIC-oriented top-level design is checked to ensure that all required modules are connected correctly. The 
+soc_top_asic.v
+ wrapper is used as the top-level module for ASIC implementation. It integrates the PicoRV32 core, bus decoder, ROM, RAM, UART, GPIO, CMU, and clock-gating logic into a single design. The design also uses simple external I/O pins such as 
+clk
+, 
+resetn
+, 
+uart_tx
+, 
+uart_rx
+, 
+gpio_in
+[31:0], 
+gpio_out
+[31:0], and 
+irq_ext
+.
+The memory design is also prepared for ASIC implementation. Instead of using hard SRAM macros, ROM and RAM are implemented as inferred memories. The ROM is reduced to 1KB, while the RAM is reduced to 256 Bytes. This compact configuration helps reduce standard-cell area and routing congestion, making the design more suitable for the 
+LibreLane
+/SKY130 implementation flow.
+The native memory interface of PicoRV32 is used instead of a complex bus protocol such as AXI or Wishbone. This interface uses a simple valid-ready handshake with address, write data, write strobe, read data, valid, and ready signals. This choice reduces logic complexity and makes the SoC more appropriate for a compact ASIC implementation.
+During logic synthesis, the RTL design is converted into a gate-level netlist using the selected 
+SkyWater
+ 130nm standard-cell library. After synthesis, the design passes through 
+floorplanning
+, placement, Clock Tree Synthesis, and routing. Physical verification is then performed to check design rules and layout correctness. The final outputs include the GDSII layout and implementation reports.
+The generated reports are used to evaluate Power, Performance, and Area. Power is evaluated through total power, dynamic power, leakage power, and clock-related power. Performance is evaluated mainly through timing reports, including Worst Negative Slack and Total Negative Slack. Area is evaluated through standard-cell area, cell count, and core utilization. These metrics are used in Chapter 4 to analyze the implementation quality of the proposed 
+SoC.
+Table 3.6. PPA metrics used for ASIC evaluation
+Metric
+Main Report
+Evaluation Purpose
+Total power
+Power report
+Evaluates the overall estimated power of the implemented SoC
+Dynamic power
+Power report
+Evaluates switching-related power, especially clock and data activity
+Leakage power
+Power report
+Evaluates static power consumed by standard cells
+Clock power
+Power report
+Evaluates power related to clock distribution and sequential elements
+Worst Negative Slack
+Timing report
+Checks whether the design meets the target clock period
+Total Negative Slack
+Timing report
+Indicates the total timing violation across paths
+Standard-cell area
+Area report
+Evaluates the silicon cost of the implemented logic
+Cell count
+Synthesis/area report
+Shows the number of standard cells used in the design
+Core utilization
+Floorplan/place report
+Indicates how densely the design occupies the core area
+GDSII layout
+Final layout output
+Confirms that the design reaches the physical layout generation stage
+For fair evaluation, the same implementation conditions should be used when comparing design versions. These conditions include the same technology, same 
+LibreLane
+ flow, same clock constraint, same 
+floorplanning
+ setup, and same evaluation metrics. This ensures that differences in Power, Performance, and Area mainly come from the design architecture and low-power implementation rather than from tool configuration differences.
+In summary, the proposed methodology uses RTL simulation to verify functional correctness and 
+LibreLane
+/SKY130 implementation to evaluate physical design characteristics. RTL simulation confirms that the SoC can execute firmware, access peripherals, handle interrupts, and control gated clocks. ASIC implementation then 
+provides power, timing, area, utilization, and GDSII results. Therefore, this flow provides a complete path from RTL design verification to ASIC-level PPA evaluation.
+Chapter Summary
+This chapter presented the proposed research approach for the PicoRV32-based low-power 
+SoC.
+ First, the overall system model was introduced, including the PicoRV32 processor, ROM, RAM, UART, GPIO, Clock Management Unit, address decoder, interrupt path, and clock-gating logic. The system was organized as a compact memory-mapped SoC, where the processor can access both memory and peripherals through a simple native memory interface.
+The hardware architecture and memory-mapped organization were then described in detail. The ASIC-oriented top-level module 
+soc_top_asic.v
+ was used to integrate the main hardware blocks into a single chip-level design. ROM and RAM were implemented as inferred memories instead of hard SRAM macros to improve compatibility with the 
+LibreLane
+/SKY130 implementation environment. In the ASIC-oriented configuration, the ROM was reduced to 1KB and the RAM was reduced to 256 Bytes to reduce implementation complexity, standard-cell area, and routing congestion.
+The main low-power technique proposed in this thesis is CMU-based clock gating. The CMU provides memory-mapped clock enable control for UART and GPIO. The gated clocks are generated using integrated clock-gating cells, which allow the firmware to enable or disable the clock activity of selected peripherals. This method focuses on reducing unnecessary dynamic switching activity while keeping the design simple and suitable for ASIC implementation.
+This chapter also described the firmware-based functional verification methodology. Three main firmware scenarios were defined: basic SoC operation, CMU-based clock-gating verification, and UART interrupt verification. These firmware programs allow the SoC to be verified from a processor-centered perspective, including boot behavior, MMIO access, GPIO activity, UART communication, interrupt response, and firmware-controlled clock gating.
+Finally, the RTL simulation and ASIC implementation flow were presented. RTL testbenches are used to verify individual modules, bus/MMIO operation, full SoC behavior, and firmware-driven scenarios. The verified RTL design is then implemented using 
+LibreLane
+ with 
+SkyWater
+ 130nm technology to generate physical layout and PPA reports. The detailed waveform results, ASIC layout, and Power, Performance, and Area evaluation are presented in Chapter 4.
+In summary, this chapter established the complete methodology used in the thesis, from system modeling and hardware organization to low-power clock gating, firmware-based verification, RTL simulation, and ASIC implementation. This methodology provides the foundation for evaluating the functional correctness and physical design quality of the proposed low-power RISC-V SoC in the next chapter.
+CONCLUSIONS AND FUTURE WORK
+CONCLUSIONS
+This section is provided as a sample for reference only.
+FUTURE WORKS
+This section is provided as a sample for reference only.
+ 
+REFERENCES
+Vietnamese:
+Quách Ngọc Ân (1992), “nhìn lại hai năm phát triển lúa lai”, 
+Di truyền học ứng dụng
+, 98(1), tr 10 – 16
+.
+Bộ Nông nghiệp và phát triển nông thôn (1996), 
+Báo cáo tổng kết 5 năm (1992 - 1996) phát triển lúa lai
+, Hà Nội.
+Nguyễn Hữu Đống, Đào Thanh Bằng, Lâm Quang Dụ, Phan Đức Trực (1997), 
+Đột biến – Cơ sở lý luận và ứng dụng
+, NXB Nông nghiệp, Hà Nội
+.
+English:
+Anderson, J.E. (1985), The Relative Inefficiency of Quota, The Cheese Case, American Economic Review, 75(1), pp. 178-90.
+Boulding, K.E. (1995), Economics Analysis, Hamish Hamilton, London.
+Burton G. W. (1988), “Cytoplasmic male-sterility in pesrl millet  (pennisetum glaucum L.)”, Agronomic Journal 50, pp. 230-231.
+Central Statistical Organization (1995), Statistical Year Book, Beijing.
+F
+AO (1971), Agricultural Commodity Projections (1970 - 1980), Vol. II. Rome.
+Website:
+Bộ Giáo dục và Đào tạo, “Hệ thống văn bản quản lý”, 
+https://moet.gov.vn/van-ban/Pages/default.aspx
+,
+ 
+truy cập ngày 12/11/2024.
+Hoàng Lê, “Kinh tế Việt Nam tăng trưởng mạnh trong quý IV”, VnExpress, https://vnexpress.net/kinh-te-tang-truong-123456.html, truy cập ngày 05/12/2024.
+APPENDIX

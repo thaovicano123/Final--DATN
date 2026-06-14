@@ -1,0 +1,5 @@
+read_verilog syn/mem_blackbox_cells.v
+read_verilog rtl/picorv32.v rtl/icg_cell.v rtl/cmu.v rtl/bus_decoder.v rtl/real_uart_mmio.v rtl/gpio_mmio.v rtl/soc_rom.v rtl/sky130_sram_wrapper.v rtl/soc_top_asic.v
+hierarchy -top soc_top_asic
+synth -top soc_top_asic
+stat

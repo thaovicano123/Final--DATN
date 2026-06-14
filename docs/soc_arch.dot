@@ -1,0 +1,96 @@
+digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+    node [fontname="Helvetica,Arial,sans-serif", shape=box, style=filled, fillcolor=white, penwidth=1.5]
+    edge [fontname="Helvetica,Arial,sans-serif", fontsize=11, fontcolor="#333333"]
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.8;
+    ranksep=1.0;
+
+    subgraph cluster_soc {
+        label = "soc_top_asic.v (LibreLane SoC Top-Level)\n(* clk and resetn are distributed globally)";
+        fontsize = 20;
+        fontcolor = "#333333";
+        style = rounded;
+        bgcolor = "#fcfcfc";
+        penwidth = 2;
+        margin = 35;
+
+        // TOP TIER
+        CPU [label="PicoRV32 Core\n(RV32IMC)", fillcolor="#ffe4b5", height=1.2, width=3.5];
+        
+        // MIDDLE TIER
+        Bus [label="Native Bus Decoder\n(Zero-Latency Routing)", fillcolor="#e6e6fa", shape=box, width=13, height=0.6];
+        
+        // BOTTOM TIER CLUSTERS
+        subgraph cluster_mem {
+            label = "Memory Hierarchy";
+            style = dashed;
+            bgcolor = "#f5f5f5";
+            margin = 15;
+            { rank=same;
+                ROM [label="soc_rom\n(1KB Inferred)", fillcolor="#d3ffd3", height=0.9];
+                RAM [label="soc_ram\n(256B Inferred)", fillcolor="#d3ffd3", height=0.9];
+            }
+        }
+
+        subgraph cluster_pm {
+            label = "Power Management";
+            style = dashed;
+            bgcolor = "#fff0f5";
+            margin = 15;
+            { rank=same;
+                CMU [label="CMU\n(Clock Mgmt)", fillcolor="#ffdabd", height=0.9];
+                ICG_UART [label="ICG Cell\n(UART)", shape=invhouse, fillcolor="#ffb6c1", width=0.8, height=0.5];
+                ICG_GPIO [label="ICG Cell\n(GPIO)", shape=invhouse, fillcolor="#ffb6c1", width=0.8, height=0.5];
+            }
+        }
+
+        subgraph cluster_periph {
+            label = "Peripherals (MMIO)";
+            style = dashed;
+            bgcolor = "#f5f5f5";
+            margin = 15;
+            { rank=same;
+                UART [label="UART MMIO", fillcolor="#e0ffff", height=0.9];
+                GPIO [label="GPIO MMIO", fillcolor="#e0ffff", height=0.9];
+            }
+        }
+        
+        // Internal Routing
+        CPU -> Bus [dir=both, color="#4169e1", penwidth=2.5, label=" Native Bus\n (valid, addr, wdata, wstrb, rdata, ready) "];
+        
+        Bus -> ROM [dir=both, color="#4169e1", penwidth=1.5, label=" sel_rom, addr\n rdata, ready "];
+        Bus -> RAM [dir=both, color="#4169e1", penwidth=1.5, label=" sel_ram, addr, wdata\n rdata, ready "];
+        Bus -> CMU [dir=both, color="#4169e1", penwidth=1.5, label=" sel_cmu, addr, wdata\n rdata, ready "];
+        Bus -> UART [dir=both, color="#4169e1", penwidth=1.5, label=" sel_uart, addr, wdata\n rdata, ready "];
+        Bus -> GPIO [dir=both, color="#4169e1", penwidth=1.5, label=" sel_gpio, addr, wdata\n rdata, ready "];
+
+        // CMU to ICG routing (using constraint=false to avoid messing up rank)
+        CMU -> ICG_UART [color="#ff1493", style=dashed, label=" uart_en ", constraint=false];
+        CMU -> ICG_GPIO [color="#ff1493", style=dashed, label=" gpio_en ", constraint=false];
+        
+        ICG_UART -> UART [color="#dc143c", penwidth=2, label=" gated_clk_uart ", constraint=false];
+        ICG_GPIO -> GPIO [color="#dc143c", penwidth=2, label=" gated_clk_gpio ", constraint=false];
+    }
+
+    // External Pads
+    { rank=same;
+        PAD_RX [label="uart_rx", shape=plaintext, fillcolor=none];
+        PAD_TX [label="uart_tx", shape=plaintext, fillcolor=none];
+        PAD_GI [label="gpio_in[31:0]", shape=plaintext, fillcolor=none];
+        PAD_GO [label="gpio_out[31:0]", shape=plaintext, fillcolor=none];
+        PAD_IRQ [label="irq_ext", shape=plaintext, fillcolor=none];
+    }
+
+    // IO Routing
+    PAD_RX -> UART [color="#333333", penwidth=1.5, constraint=false];
+    UART -> PAD_TX [color="#333333", penwidth=1.5, constraint=false];
+    PAD_GI -> GPIO [color="#333333", penwidth=1.5, constraint=false];
+    GPIO -> PAD_GO [color="#333333", penwidth=1.5, constraint=false];
+    PAD_IRQ -> CPU [color="#ff8c00", style=dotted, penwidth=1.5, constraint=false];
+
+    // IRQs to CPU
+    UART -> CPU [color="#ff8c00", style=dotted, penwidth=1.5, label=" irq_uart ", constraint=false];
+    GPIO -> CPU [color="#ff8c00", style=dotted, penwidth=1.5, label=" irq_gpio ", constraint=false];
+}

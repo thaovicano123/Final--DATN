@@ -1,0 +1,19 @@
+# Phase4 Case A: NO clock gating (ICG bypass) + blackbox memory.
+
+read_verilog third_party/picorv32/picorv32.v
+read_verilog syn/icg_cell_nogate.v rtl/cmu.v rtl/bus_decoder.v rtl/real_uart_mmio.v rtl/gpio_mmio.v rtl/soc_top.v
+read_verilog -lib syn/mem_blackbox_cells.v
+
+hierarchy -check -top soc_top
+proc
+opt
+fsm
+opt
+techmap
+opt
+
+tee -o results/syn/phase4_no_gating/check.txt check
+
+synth -top soc_top
+tee -o results/syn/phase4_no_gating/stat.txt stat
+write_verilog -noattr results/syn/phase4_no_gating/soc_top_netlist.v

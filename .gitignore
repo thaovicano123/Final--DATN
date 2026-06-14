@@ -1,0 +1,27 @@
+# Build artifacts
+*.o
+*.obj
+*.out
+*.log
+*.tmp
+
+# Firmware artifacts
+fw/*.elf
+fw/*.bin
+fw/*.map
+
+# Simulation artifacts
+results/**/*.vcd
+results/**/*.vvp
+third_party/picorv32/*.vcd
+third_party/picorv32/*.vvp
+third_party/picorv32/testbench.trace
+third_party/picorv32/firmware/*.elf
+third_party/picorv32/firmware/*.bin
+third_party/picorv32/firmware/*.map
+third_party/picorv32/firmware/*.hex
+
+# Python cache
+__pycache__/
+*.pyc
+asic/librelane_soc/runs/

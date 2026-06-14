@@ -1,0 +1,32 @@
+{
+  "DESIGN_NAME": "soc_top_asic",
+  "VERILOG_FILES": [
+    "dir::../../third_party/picorv32/picorv32.v",
+    "dir::../../rtl/icg_cell.v",
+    "dir::../../rtl/cmu.v",
+    "dir::../../rtl/bus_decoder.v",
+    "dir::../../rtl/real_uart_mmio.v",
+    "dir::../../rtl/gpio_mmio.v",
+    "dir::../../rtl/soc_rom.v",
+    "dir::../../rtl/soc_ram.v",
+    "dir::../../rtl/soc_top_asic.v"
+  ],
+  "FALLBACK_SDC": "dir::constraints.sdc",
+  "RUN_LINTER": false,
+  "FP_SIZING": "relative",
+  "FP_CORE_UTIL": 25,
+  "PL_TARGET_DENSITY_PCT": 35,
+  "DIODE_INSERTION_STRATEGY": 3,
+  "CLOCK_PORT": "clk",
+  "CLOCK_NET": "clk",
+  "GRT_ANTENNA_ITERS": 50,
+  "STA_CORNERS": [
+    "nom_tt_025C_1v80",
+    "nom_ss_100C_1v60",
+    "nom_ff_n40C_1v95"
+  ],
+  "pdk::sky130*": {
+    "CLOCK_PERIOD": 50,
+    "FP_CORE_UTIL": 15
+  }
+}

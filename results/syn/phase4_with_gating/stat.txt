@@ -1,0 +1,216 @@
+
+19. Printing statistics.
+
+=== $paramod$44c3cff256c69c66360fe054c903eb1f129146bd\picorv32 ===
+
+   Number of wires:               8525
+   Number of wire bits:          11632
+   Number of public wires:         202
+   Number of public wire bits:    2671
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              10736
+     $_ANDNOT_                    2256
+     $_AND_                        651
+     $_DFFE_PP_                   1380
+     $_DFF_P_                      124
+     $_MUX_                       2775
+     $_NAND_                       378
+     $_NOR_                        257
+     $_NOT_                        179
+     $_ORNOT_                      229
+     $_OR_                        1662
+     $_SDFFCE_PN0P_                 34
+     $_SDFFCE_PP0P_                  6
+     $_SDFFCE_PP1P_                  1
+     $_SDFFE_PN0P_                 193
+     $_SDFFE_PN1P_                  32
+     $_SDFFE_PP0P_                   1
+     $_SDFFE_PP1P_                   3
+     $_SDFF_PN0_                    98
+     $_SDFF_PP0_                     3
+     $_XNOR_                        77
+     $_XOR_                        397
+
+=== bus_decoder ===
+
+   Number of wires:                 50
+   Number of wire bits:             81
+   Number of public wires:           8
+   Number of public wire bits:      39
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 49
+     $_ANDNOT_                      10
+     $_AND_                          1
+     $_NAND_                         1
+     $_NOR_                          3
+     $_ORNOT_                        5
+     $_OR_                          29
+
+=== cmu ===
+
+   Number of wires:                 30
+   Number of wire bits:            133
+   Number of public wires:          14
+   Number of public wire bits:     117
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 25
+     $_ANDNOT_                       8
+     $_DFFE_PN1P_                    3
+     $_NAND_                         2
+     $_NOR_                          3
+     $_ORNOT_                        5
+     $_OR_                           1
+     icg_cell                        3
+
+=== gpio_mmio ===
+
+   Number of wires:                383
+   Number of wire bits:            801
+   Number of public wires:          21
+   Number of public wire bits:     408
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                521
+     $_ANDNOT_                     237
+     $_AND_                         33
+     $_DFFE_PN0P_                   64
+     $_NAND_                        33
+     $_NOR_                          5
+     $_NOT_                          4
+     $_ORNOT_                       35
+     $_OR_                          78
+     $_XOR_                         32
+
+=== icg_cell ===
+
+   Number of wires:                  7
+   Number of wire bits:              7
+   Number of public wires:           6
+   Number of public wire bits:       6
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                  3
+     $_AND_                          1
+     $_DFF_NN0_                      1
+     $_OR_                           1
+
+=== soc_top ===
+
+   Number of wires:                220
+   Number of wire bits:            597
+   Number of public wires:          42
+   Number of public wire bits:     419
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                219
+     $_AND_                         45
+     $_MUX_                        160
+     $_OR_                           6
+     $paramod$44c3cff256c69c66360fe054c903eb1f129146bd\picorv32      1
+     bus_decoder                     1
+     cmu                             1
+     gpio_mmio                       1
+     soc_ram                         1
+     soc_rom                         1
+     spi_mmio                        1
+     uart_mmio                       1
+
+=== spi_mmio ===
+
+   Number of wires:                538
+   Number of wire bits:            882
+   Number of public wires:          38
+   Number of public wire bits:     359
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                662
+     $_ANDNOT_                     191
+     $_AND_                         14
+     $_DFFE_PN0P_                   71
+     $_DFFE_PN1P_                    1
+     $_DFF_PN0_                     32
+     $_MUX_                        205
+     $_NAND_                        34
+     $_NOR_                          5
+     $_NOT_                          8
+     $_ORNOT_                       19
+     $_OR_                          63
+     $_XNOR_                         6
+     $_XOR_                         13
+
+=== uart_mmio ===
+
+   Number of wires:                 39
+   Number of wire bits:            145
+   Number of public wires:          12
+   Number of public wire bits:     118
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                 44
+     $_ANDNOT_                      13
+     $_AND_                          2
+     $_DFFE_PN0P_                    8
+     $_NOR_                          4
+     $_ORNOT_                       10
+     $_OR_                           6
+     $print                          1
+
+=== design hierarchy ===
+
+   soc_top                           1
+     $paramod$44c3cff256c69c66360fe054c903eb1f129146bd\picorv32      1
+     bus_decoder                     1
+     cmu                             1
+       icg_cell                      3
+     gpio_mmio                       1
+     spi_mmio                        1
+     uart_mmio                       1
+
+   Number of wires:               9806
+   Number of wire bits:          14292
+   Number of public wires:         355
+   Number of public wire bits:    4149
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              12256
+     $_ANDNOT_                    2715
+     $_AND_                        749
+     $_DFFE_PN0P_                  143
+     $_DFFE_PN1P_                    4
+     $_DFFE_PP_                   1380
+     $_DFF_NN0_                      3
+     $_DFF_PN0_                     32
+     $_DFF_P_                      124
+     $_MUX_                       3140
+     $_NAND_                       448
+     $_NOR_                        277
+     $_NOT_                        191
+     $_ORNOT_                      303
+     $_OR_                        1848
+     $_SDFFCE_PN0P_                 34
+     $_SDFFCE_PP0P_                  6
+     $_SDFFCE_PP1P_                  1
+     $_SDFFE_PN0P_                 193
+     $_SDFFE_PN1P_                  32
+     $_SDFFE_PP0P_                   1
+     $_SDFFE_PP1P_                   3
+     $_SDFF_PN0_                    98
+     $_SDFF_PP0_                     3
+     $_XNOR_                        83
+     $_XOR_                        442
+     $print                          1
+     soc_ram                         1
+     soc_rom                         1
+

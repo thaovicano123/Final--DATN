@@ -1,0 +1,166 @@
+digraph CTS {
+    bgcolor=white;
+    rankdir=TB;
+    nodesep=0.08;
+    ranksep=0.5;
+    node [label="", fixedsize=true];
+    edge [arrowhead=none, color="#999999", penwidth=0.8];
+
+    /* ===== Root Buffer ===== */
+    node [shape=invtriangle, style=filled, fillcolor="#FF8C00", width=0.45, height=0.4];
+    R;
+
+    /* ===== Level 1 Buffers (4 clock roots) ===== */
+    node [width=0.38, height=0.33];
+    L1a; L1b; L1c; L1d;
+
+    /* ===== Level 2 Buffers ===== */
+    node [width=0.3, height=0.27];
+    L2a1; L2a2; L2a3; L2a4;
+    L2b1; L2b2; L2b3;
+    L2c1; L2c2; L2c3;
+    L2d1; L2d2;
+
+    /* ===== Level 3 Buffers ===== */
+    node [width=0.24, height=0.22];
+    L3a1; L3a2; L3a3; L3a4; L3a5; L3a6; L3a7; L3a8;
+    L3a9; L3a10; L3a11; L3a12;
+    L3b1; L3b2; L3b3; L3b4; L3b5; L3b6;
+    L3c1; L3c2; L3c3; L3c4; L3c5; L3c6;
+    L3d1; L3d2; L3d3;
+
+    /* ===== Level 4 Buffers (main branch only) ===== */
+    node [width=0.2, height=0.18];
+    L4a1; L4a2; L4a3; L4a4; L4a5; L4a6; L4a7; L4a8;
+    L4a9; L4a10; L4a11; L4a12; L4a13; L4a14; L4a15; L4a16;
+    L4a17; L4a18; L4a19; L4a20; L4a21; L4a22; L4a23; L4a24;
+
+    /* ===== Sinks (Flip-Flops) ===== */
+    node [shape=rectangle, fillcolor="#DAA520", width=0.06, height=0.35];
+
+    /* Main CPU sinks */
+    Sa1; Sa2; Sa3; Sa4; Sa5; Sa6; Sa7; Sa8; Sa9; Sa10;
+    Sa11; Sa12; Sa13; Sa14; Sa15; Sa16; Sa17; Sa18; Sa19; Sa20;
+    Sa21; Sa22; Sa23; Sa24; Sa25; Sa26; Sa27; Sa28; Sa29; Sa30;
+    Sa31; Sa32; Sa33; Sa34; Sa35; Sa36; Sa37; Sa38; Sa39; Sa40;
+    Sa41; Sa42; Sa43; Sa44; Sa45; Sa46; Sa47; Sa48;
+
+    /* UART sinks */
+    Sb1; Sb2; Sb3; Sb4; Sb5; Sb6; Sb7; Sb8; Sb9; Sb10; Sb11; Sb12;
+
+    /* GPIO sinks */
+    Sc1; Sc2; Sc3; Sc4; Sc5; Sc6; Sc7; Sc8; Sc9; Sc10; Sc11; Sc12;
+
+    /* Macro sinks */
+    Sd1; Sd2; Sd3;
+
+    /* ===== CONNECTIONS ===== */
+
+    /* Root -> Level 1 */
+    R -> L1a;
+    R -> L1b;
+    R -> L1c;
+    R -> L1d;
+
+    /* Level 1 -> Level 2 (Main CPU branch - largest) */
+    L1a -> {L2a1 L2a2 L2a3 L2a4};
+
+    /* Level 1 -> Level 2 (UART branch) */
+    L1b -> {L2b1 L2b2 L2b3};
+
+    /* Level 1 -> Level 2 (GPIO branch) */
+    L1c -> {L2c1 L2c2 L2c3};
+
+    /* Level 1 -> Level 2 (Macro branch) */
+    L1d -> {L2d1 L2d2};
+
+    /* Level 2 -> Level 3 (Main CPU) */
+    L2a1 -> {L3a1 L3a2 L3a3};
+    L2a2 -> {L3a4 L3a5 L3a6};
+    L2a3 -> {L3a7 L3a8 L3a9};
+    L2a4 -> {L3a10 L3a11 L3a12};
+
+    /* Level 2 -> Level 3 (UART) */
+    L2b1 -> {L3b1 L3b2};
+    L2b2 -> {L3b3 L3b4};
+    L2b3 -> {L3b5 L3b6};
+
+    /* Level 2 -> Level 3 (GPIO) */
+    L2c1 -> {L3c1 L3c2};
+    L2c2 -> {L3c3 L3c4};
+    L2c3 -> {L3c5 L3c6};
+
+    /* Level 2 -> Level 3 (Macro) */
+    L2d1 -> {L3d1};
+    L2d2 -> {L3d2 L3d3};
+
+    /* Level 3 -> Level 4 (Main CPU deepest branch) */
+    L3a1 -> {L4a1 L4a2};
+    L3a2 -> {L4a3 L4a4};
+    L3a3 -> {L4a5 L4a6};
+    L3a4 -> {L4a7 L4a8};
+    L3a5 -> {L4a9 L4a10};
+    L3a6 -> {L4a11 L4a12};
+    L3a7 -> {L4a13 L4a14};
+    L3a8 -> {L4a15 L4a16};
+    L3a9 -> {L4a17 L4a18};
+    L3a10 -> {L4a19 L4a20};
+    L3a11 -> {L4a21 L4a22};
+    L3a12 -> {L4a23 L4a24};
+
+    /* Level 4 -> Sinks (Main CPU) with blue color */
+    edge [color="#5CACEE", penwidth=0.5];
+    L4a1 -> {Sa1 Sa2};
+    L4a2 -> {Sa3 Sa4};
+    L4a3 -> {Sa5 Sa6};
+    L4a4 -> {Sa7 Sa8};
+    L4a5 -> {Sa9 Sa10};
+    L4a6 -> {Sa11 Sa12};
+    L4a7 -> {Sa13 Sa14};
+    L4a8 -> {Sa15 Sa16};
+    L4a9 -> {Sa17 Sa18};
+    L4a10 -> {Sa19 Sa20};
+    L4a11 -> {Sa21 Sa22};
+    L4a12 -> {Sa23 Sa24};
+    L4a13 -> {Sa25 Sa26};
+    L4a14 -> {Sa27 Sa28};
+    L4a15 -> {Sa29 Sa30};
+    L4a16 -> {Sa31 Sa32};
+    L4a17 -> {Sa33 Sa34};
+    L4a18 -> {Sa35 Sa36};
+    L4a19 -> {Sa37 Sa38};
+    L4a20 -> {Sa39 Sa40};
+    L4a21 -> {Sa41 Sa42};
+    L4a22 -> {Sa43 Sa44};
+    L4a23 -> {Sa45 Sa46};
+    L4a24 -> {Sa47 Sa48};
+
+    /* Level 3 -> Sinks (UART) */
+    L3b1 -> {Sb1 Sb2};
+    L3b2 -> {Sb3 Sb4};
+    L3b3 -> {Sb5 Sb6};
+    L3b4 -> {Sb7 Sb8};
+    L3b5 -> {Sb9 Sb10};
+    L3b6 -> {Sb11 Sb12};
+
+    /* Level 3 -> Sinks (GPIO) */
+    L3c1 -> {Sc1 Sc2};
+    L3c2 -> {Sc3 Sc4};
+    L3c3 -> {Sc5 Sc6};
+    L3c4 -> {Sc7 Sc8};
+    L3c5 -> {Sc9 Sc10};
+    L3c6 -> {Sc11 Sc12};
+
+    /* Level 3 -> Sinks (Macro) */
+    L3d1 -> {Sd1};
+    L3d2 -> {Sd2};
+    L3d3 -> {Sd3};
+
+    /* ===== RANK CONSTRAINTS ===== */
+    {rank=same; R}
+    {rank=same; L1a L1b L1c L1d}
+    {rank=same; L2a1 L2a2 L2a3 L2a4 L2b1 L2b2 L2b3 L2c1 L2c2 L2c3 L2d1 L2d2}
+    {rank=same; L3a1 L3a2 L3a3 L3a4 L3a5 L3a6 L3a7 L3a8 L3a9 L3a10 L3a11 L3a12 L3b1 L3b2 L3b3 L3b4 L3b5 L3b6 L3c1 L3c2 L3c3 L3c4 L3c5 L3c6 L3d1 L3d2 L3d3}
+    {rank=same; L4a1 L4a2 L4a3 L4a4 L4a5 L4a6 L4a7 L4a8 L4a9 L4a10 L4a11 L4a12 L4a13 L4a14 L4a15 L4a16 L4a17 L4a18 L4a19 L4a20 L4a21 L4a22 L4a23 L4a24}
+    {rank=same; Sa1 Sa2 Sa3 Sa4 Sa5 Sa6 Sa7 Sa8 Sa9 Sa10 Sa11 Sa12 Sa13 Sa14 Sa15 Sa16 Sa17 Sa18 Sa19 Sa20 Sa21 Sa22 Sa23 Sa24 Sa25 Sa26 Sa27 Sa28 Sa29 Sa30 Sa31 Sa32 Sa33 Sa34 Sa35 Sa36 Sa37 Sa38 Sa39 Sa40 Sa41 Sa42 Sa43 Sa44 Sa45 Sa46 Sa47 Sa48 Sb1 Sb2 Sb3 Sb4 Sb5 Sb6 Sb7 Sb8 Sb9 Sb10 Sb11 Sb12 Sc1 Sc2 Sc3 Sc4 Sc5 Sc6 Sc7 Sc8 Sc9 Sc10 Sc11 Sc12 Sd1 Sd2 Sd3}
+}

@@ -1,0 +1,21 @@
+# Synthesis flow with memory blackboxed.
+# ROM/RAM are intentionally excluded from logic cost accounting.
+
+read_verilog third_party/picorv32/picorv32.v
+read_verilog rtl/icg_cell.v rtl/cmu.v rtl/bus_decoder.v rtl/real_uart_mmio.v rtl/gpio_mmio.v rtl/soc_top.v
+read_verilog -lib syn/mem_blackbox_cells.v
+
+hierarchy -check -top soc_top
+proc
+opt
+fsm
+opt
+techmap
+opt
+
+tee -o results/syn/blackbox_memory/stat.txt stat
+
+# Generic synthesis result for comparison-only (no tech lib binding here).
+synth -top soc_top
+tee -o results/syn/blackbox_memory/check.txt check
+write_verilog -noattr results/syn/blackbox_memory/soc_top_netlist.v
